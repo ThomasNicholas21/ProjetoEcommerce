@@ -7,15 +7,15 @@ LABEL maintainer="thomasnicholaas@gmail.com"
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Copia a pasta "ecommerce" e "scripts" para dentro do container.
-COPY ecommerce /ecommerce
+# Copia a pasta "application" e "scripts" para dentro do container.
+COPY application /application
 COPY scripts /scripts
 
 # Verifica se o arquivo commands.sh foi copiado
 RUN ls -l /scripts
 
-# Entra na pasta ecommerce no container
-WORKDIR /ecommerce
+# Entra na pasta application no container
+WORKDIR /application
 
 # Expõe a porta 8000
 EXPOSE 8000
@@ -27,9 +27,9 @@ RUN apt-get update && apt-get install -y \
     useradd -m duser && \
     python -m venv /venv && \
     /venv/bin/pip install --upgrade pip && \
-    /venv/bin/pip install -r /ecommerce/requirements.txt && \
+    /venv/bin/pip install -r /application/requirements.txt && \
     chmod -R +x /scripts && \
-    chown -R duser:duser /ecommerce && \
+    chown -R duser:duser /application && \
     mkdir -p /data/web/static /data/web/media && \
     chown -R duser:duser /data/web
 

@@ -1,12 +1,12 @@
 services:
-  ecommerce:
-    container_name: ecommerce
+  application:
+    container_name: application
     build:
       context: .
     ports:
       - 8000:8000
     volumes:
-      - ./ecommerce:/ecommerce
+      - ./application:/application
       - ./data/web/static:/data/web/static/
       - ./data/web/media:/data/web/media/
     env_file:
