@@ -16,8 +16,17 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('ecommerce.urls')),
     path('admin/', admin.site.urls),
 ]
+
+
+if settings.DEBUG:
+    # permite que o dev tenha acesso aos arquivos enviados pelo user
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # permite que o dev tenha acesso aos arquivos estáticos
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
