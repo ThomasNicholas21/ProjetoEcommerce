@@ -1,0 +1,28 @@
+services:
+  ecommerce:
+    container_name: ecommerce
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./ecommerce:/ecommerce
+      - ./data/web/static:/data/web/static/
+      - ./data/web/media:/data/web/media/
+    env_file:
+      - ./dotenv_files/.env
+    depends_on:
+      - mysql
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    env_file:
+      - ./dotenv_files/.env
+
+volumes:
+  mysql_data:
