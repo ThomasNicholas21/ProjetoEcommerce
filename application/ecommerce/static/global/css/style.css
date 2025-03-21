@@ -85,6 +85,28 @@ header {
     background: #e6b800;
 }
 
+/* Ícone do carrinho de compras */
+.cart-icon {
+    font-size: 1.5rem;
+    padding: 10px 15px;
+    color: white;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+
+.cart-icon:hover a{
+    color: #ffcc00;
+ }
+
+.font-shopping-cart {
+    font-family: "Quicksand", sans-serif;
+    font-size: 1.5rem;
+    color: white;
+    transition: color 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .login-btn {
     background-color: #ffcc00;
     color: black;
@@ -98,41 +120,6 @@ header {
     background-color: #e6b800;
 }
 
-.cart-icon i {
-    font-size: 1.5rem;
-    color: white;
-    transition: color 0.3s;
-}
-
-.cart-icon:hover i {
-    color: #ffcc00;
-}
-
-/* Ícone do carrinho de compras */
-.cart-icon {
-    font-size: 1.5rem;
-    padding: 10px 15px;
-    color: white;
-    transition: color 0.3s;
-    cursor: pointer;
-}
-
-.cart-icon:hover {
-    color: #ffcc00;
-}
-
-.font-shopping-cart {
-    font-family: "Quicksand", sans-serif;
-    font-size: 1.5rem;
-    color: white;
-    transition: color 0.3s;
-    cursor: pointer;
-    text-decoration: none;
-}
-
-.font-shopping-cart:hover {
-    color: #ffcc00;
-}
 
 /* Estilos para a página Sobre */
 .about-container {
