@@ -134,6 +134,80 @@ header {
     color: #ffcc00;
 }
 
+/* Estilos para a página Sobre */
+.about-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.about-title {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.about-info p {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 10px 0;
+}
+
+.about-text {
+    margin-top: 30px;
+}
+
+.about-text h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.about-text p {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+.social-links {
+    margin-top: 40px;
+}
+
+.social-links h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.social-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.social-links ul li {
+    margin: 10px 0;
+}
+
+.social-links ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1rem;
+    transition: color 0.3s;
+}
+
+.social-links ul li a:hover {
+    color: #ffcc00;
+}
+
+.social-links ul li a i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
     header {
