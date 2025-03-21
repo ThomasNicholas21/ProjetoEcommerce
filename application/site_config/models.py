@@ -19,14 +19,22 @@ class SiteConfig(models.Model):
 
     def save(self, *args, **kwargs):
         current_favicon_name = str(self.favicon.name)
+        current_logo_name = str(self.logo.name)
         super().save(*args, **kwargs)
         favicon_changed = False
+        logo_changed = False
 
         if self.favicon:
             favicon_changed = current_favicon_name != self.favicon.name
 
         if favicon_changed:
             resize_image(self.favicon, 32)
+
+        if self.logo:
+            logo_changed = current_logo_name != self.logo.name
+        
+        if logo_changed:
+            resize_image(self.logo, 64)
 
 
     def __str__(self):
