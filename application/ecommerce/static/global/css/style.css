@@ -26,6 +26,17 @@ header {
     font-weight: normal;
 }
 
+.logo-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-name img{
+    object-fit: contain;
+}
+
+
 .nav-links {
     list-style: none;
     display: flex;
