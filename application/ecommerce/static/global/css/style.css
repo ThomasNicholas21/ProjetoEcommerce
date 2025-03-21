@@ -203,9 +203,21 @@ header {
     color: #ffcc00;
 }
 
-.social-links ul li a i {
-    margin-right: 10px;
-    font-size: 1.2rem;
+.social-media-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-media-item img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.social-media-item span {
+    font-size: 1rem;
+    color: #333;
 }
 
 /* Responsivo */
