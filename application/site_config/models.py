@@ -32,6 +32,7 @@ class SocialMidiaLinks(models.Model):
         null=True, help_text='Insira o Link da Rede Social'
         )
     new_tab = models.BooleanField(default=False)
+    socialmidiaicon = models.ImageField(upload_to="icon/%Y/%m", blank=True, default='')
     site_config = models.ForeignKey(
         SiteConfig, on_delete=models.CASCADE,
         blank=True, null=True, default=None
