@@ -1,5 +1,5 @@
 from django.db import models
-
+from utils.images.image_validator import resize_image
 # Create your models here.
 
 class SiteConfig(models.Model):
@@ -16,6 +16,18 @@ class SiteConfig(models.Model):
     cpf = models.CharField(max_length=14, unique=True, blank=True, null=True)
     logo = models.ImageField(upload_to="logo/Y%/%m", blank=True, default='')
     favicon = models.ImageField(upload_to="assets/favicon/%Y/%m", blank=True, default='') # inserir validaçöes de imagem futuramente
+
+    def save(self, *args, **kwargs):
+        current_favicon_name = str(self.favicon.name)
+        super().save(*args, **kwargs)
+        favicon_changed = False
+
+        if self.favicon:
+            favicon_changed = current_favicon_name != self.favicon.name
+
+        if favicon_changed:
+            resize_image(self.favicon, 32)
+
 
     def __str__(self):
         return self.name
@@ -37,6 +49,17 @@ class SocialMidiaLinks(models.Model):
         SiteConfig, on_delete=models.CASCADE,
         blank=True, null=True, default=None
         )
+    
+    def save(self, *args, **kwargs):
+        current_socialmidiaicon_name = str(self.socialmidiaicon.name)
+        super().save(*args, **kwargs)
+        socialmidiaicon_changed = False
+
+        if self.socialmidiaicon:
+            socialmidiaicon_changed = current_socialmidiaicon_name != self.socialmidiaicon.name
+
+        if socialmidiaicon_changed:
+            resize_image(self.socialmidiaicon, 24)
     
     def __str__(self):
         return self.name
