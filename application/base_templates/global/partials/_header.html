@@ -1,5 +1,8 @@
 <header>
-    <div class="logo">{{ site_config.name }}</div>
+    <div class="logo logo-name">
+        <img src="{{ site_config.logo.url }}" alt=" {{ site_config.logo.name }} ">
+        <span> {{ site_config.name }} </span>
+    </div>
     <nav>
         <ul class="nav-links">
             <li><a href="#">Categorias</a></li>
