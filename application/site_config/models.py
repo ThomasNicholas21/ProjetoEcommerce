@@ -20,3 +20,22 @@ class SiteConfig(models.Model):
     def __str__(self):
         return self.name
     
+class SocialMidiaLinks(models.Model):
+    class Meta:
+        verbose_name = "Social Midia Link"
+        verbose_name_plural = "Social Midia Links"
+
+    name = models.CharField(max_length=35)
+    urls = models.URLField(
+        max_length=200, 
+        blank=True, 
+        null=True, help_text='Insira o Link da Rede Social'
+        )
+    new_tab = models.BooleanField(default=False)
+    site_config = models.ForeignKey(
+        SiteConfig, on_delete=models.CASCADE,
+        blank=True, null=True, default=None
+        )
+    
+    def __str__(self):
+        return self.name
