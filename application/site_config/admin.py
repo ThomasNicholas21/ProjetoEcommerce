@@ -21,3 +21,6 @@ class SiteConfigAdmin(admin.ModelAdmin):
         )
     list_display_links = 'name',
     inlines = SocialMidiaLinkInline,
+
+    def has_add_permission(self, request):
+        return not models.SiteConfig.objects.all()[:1].exists()

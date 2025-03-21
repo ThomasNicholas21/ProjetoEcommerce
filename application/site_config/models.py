@@ -5,7 +5,7 @@ from django.db import models
 class SiteConfig(models.Model):
     class Meta:
         verbose_name = "Configuration"
-        verbose_name_plural = "Configurations"
+        verbose_name_plural = "Configuration"
 
     name = models.CharField(max_length=65, default='E-commerce | Change-me')
     address = models.TextField()
