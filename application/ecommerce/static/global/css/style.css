@@ -121,6 +121,19 @@ header {
     color: #ffcc00;
 }
 
+.font-shopping-cart {
+    font-family: "Quicksand", sans-serif;
+    font-size: 1.5rem;
+    color: white;
+    transition: color 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.font-shopping-cart:hover {
+    color: #ffcc00;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
     header {
