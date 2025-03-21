@@ -18,21 +18,27 @@
 
         <div class="social-links">
             <h2>Nossas Redes Sociais</h2>
-            {% for socialmedia in site_config.socialmidialinks_set.all %}
             <ul>
+                {% for socialmedia in site_config.socialmidialinks_set.all %}
                 <li>
                     {% if socialmedia.new_tab %}
                     <a href="{{ socialmedia.urls }}" target="_blank">
-                        <link rel="shortcut icon" href="{{ socialmedia.socialmidiaicon }}"> {{ socialmedia.name }} 
+                        <div class="social-media-item">
+                            <img src="{{ socialmedia.socialmidiaicon.url }}" alt="{{ socialmedia.name }}">
+                            <span>{{ socialmedia.name }}</span>
+                        </div>
                     </a>
                     {% else %}
-                    <a href="{{ socialmedia.urls }}" >
-                        <link rel="shortcut icon" href="{{ socialmedia.socialmidiaicon }}"> {{ socialmedia.name }} 
+                    <a href="{{ socialmedia.urls }}">
+                        <div class="social-media-item">
+                            <img src="{{ socialmedia.socialmidiaicon.url }}" alt="{{ socialmedia.name }}">
+                            <span>{{ socialmedia.name }}</span>
+                        </div>
                     </a>
                     {% endif %}
                 </li>
+                {% endfor %}
             </ul>
-            {% endfor %}
         </div>
     </div>
 {% endblock content %}
