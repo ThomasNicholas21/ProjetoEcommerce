@@ -1,0 +1,38 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+    <div class="about-container">
+        <h1 class="about-title">Sobre Nós</h1>
+        
+        <div class="about-info">
+            <p><strong>Nome:</strong> {{ site_config.name }}</p>
+            <p><strong>Endereço:</strong> {{ site_config.address }}</p>
+            <p><strong>Número de Contato:</strong> {{ site_config.contact_number }}</p>
+            <p><strong>E-mail de Contato:</strong> {{ site_config.contact_email }}</p>
+        </div>
+
+        <div class="about-text">
+            <h2>Quem Somos</h2>
+            <p>{{ site_config.about }}</p>
+        </div>
+
+        <div class="social-links">
+            <h2>Nossas Redes Sociais</h2>
+            {% for socialmedia in site_config.socialmidialinks_set.all %}
+            <ul>
+                <li>
+                    {% if socialmedia.new_tab %}
+                    <a href="{{ socialmedia.urls }}" target="_blank">
+                        <link rel="shortcut icon" href="{{ socialmedia.socialmidiaicon }}"> {{ socialmedia.name }} 
+                    </a>
+                    {% else %}
+                    <a href="{{ socialmedia.urls }}" >
+                        <link rel="shortcut icon" href="{{ socialmedia.socialmidiaicon }}"> {{ socialmedia.name }} 
+                    </a>
+                    {% endif %}
+                </li>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
