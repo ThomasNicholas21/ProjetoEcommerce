@@ -1,5 +1,6 @@
 from django.db import models
 from utils.images.image_validator import resize_image
+from utils.validators.validate_image import is_png_svg
 # Create your models here.
 
 class SiteConfig(models.Model):
@@ -14,8 +15,8 @@ class SiteConfig(models.Model):
     about = models.TextField()
     cnpj = models.CharField(max_length=18, unique=True, blank=True, null=True)
     cpf = models.CharField(max_length=14, unique=True, blank=True, null=True)
-    logo = models.ImageField(upload_to="logo/Y%/%m", blank=True, default='')
-    favicon = models.ImageField(upload_to="assets/favicon/%Y/%m", blank=True, default='') # inserir validaçöes de imagem futuramente
+    logo = models.ImageField(upload_to="logo/Y%/%m", blank=True, default='', validators=[is_png_svg,])
+    favicon = models.ImageField(upload_to="assets/favicon/%Y/%m", blank=True, default='', validators=[is_png_svg,]) # inserir validaçöes de imagem futuramente
 
     def save(self, *args, **kwargs):
         current_favicon_name = str(self.favicon.name)
