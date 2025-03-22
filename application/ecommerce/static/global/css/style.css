@@ -54,6 +54,12 @@ header {
     color: #ffcc00;
 }
 
+.nav-links li.active a {
+    color: #ffcc00; /* Destacar a aba ativa */
+    font-weight: bold;
+    border-bottom: 2px solid #ffcc00;
+}
+
 .header-icons {
     display: flex;
     align-items: center;
