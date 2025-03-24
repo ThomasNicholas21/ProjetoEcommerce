@@ -1,5 +1,5 @@
 from django.urls import path
-from ecommerce.views import index, about, category, product_view
+from ecommerce.views import index, about, category, ProductDetailView
 
 app_name='ecommerce'
 
@@ -10,5 +10,5 @@ urlpatterns = [
     path('category/', category, name='category'),
 
     # Product Views
-    path('product/<slug:slug>', product_view, name='product'),
+    path('product/<slug:slug>', ProductDetailView.as_view(), name='product'),
 ]

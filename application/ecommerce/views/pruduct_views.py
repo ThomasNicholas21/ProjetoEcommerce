@@ -1,7 +1,11 @@
-from django.shortcuts import render
 from ecommerce.models import Product
+from django.views.generic.detail import DetailView
 # Create your views here.
 
 
-def product_view(request, product_slug):
-    return render(request)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'ecommerce/product.html'
+    slug_field = 'slug'
+    context_object_name = 'product'
+    queryset = Product.objects.filter(active=True)
