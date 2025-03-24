@@ -306,6 +306,138 @@ header {
     margin: 0 !important;
 }
 
+/* Product style*/
+/* Container Principal */
+.product-detail-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+/* Alinhando a parte principal (Imagem + Informações) */
+.product-main-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+}
+
+/* Imagem do Produto */
+.product-image-wrapper {
+    flex: 1;
+    max-width: 400px;
+    text-align: center;
+}
+
+.product-image {
+    width: 100%;
+    max-width: 350px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Informações do Produto */
+.product-info {
+    flex: 1;
+    max-width: 600px;
+}
+
+.product-title {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.product-short-description {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Preços */
+.product-price {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 8px;
+}
+
+.discounted-price {
+    color: red;
+    font-weight: bold;
+}
+
+.final-price {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Botões */
+.product-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    text-decoration: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart {
+    /* background-color: #28a745; */
+    border: 2px solid #ffcc00;
+    color: #ffcc00;
+}
+
+.add-to-cart:hover {
+    background-color: #ffcc00;
+    color: #333;
+    transform: scale(1.05);
+}
+
+.buy-now {
+    background-color: #ffcc00;
+    color: #333;
+}
+
+.buy-now:hover {
+    border: 2px solid #ffcc00;
+    background-color: #ffffff;
+    color: #ffcc00;
+    transform: scale(1.05);
+}
+
+/* Descrição Longa Agora Separada e Centralizada */
+.product-description {
+    width: 100%;
+    text-align: left;
+    font-size: 1em;
+    color: #444;
+    line-height: 1.5;
+    margin-top: 40px;
+    padding: 20px;
+}
+
+
 /* Pagination Style */
 .pagination-container {
     display: flex;
