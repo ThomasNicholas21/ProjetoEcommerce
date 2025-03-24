@@ -1,0 +1,49 @@
+{% if page_obj and page_obj.has_other_pages %}
+<div>
+    <div>
+        <div>
+
+            <nav class="pagination-container">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a title="Page 1" aria-label="Page 1" href="?page=1{{ search_url }}">
+                        «
+                    </a>
+                    <a title="Page {{ page_obj.previous_page_number }}"
+                        aria-label="Page {{ page_obj.previous_page_number }}"
+                        href="?page={{ page_obj.previous_page_number }}{{ search_url }}">
+                        ‹
+                    </a>
+                    {% else %}
+                    <span class="disabled">
+                        «
+                    </span>
+                    {% endif %}
+
+                    <span class="current-page" title="Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}"
+                        aria-current="page">
+                        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                    <a title="Page {{ page_obj.next_page_number }}" aria-label="Page {{ page_obj.next_page_number }}"
+                        href="?page={{ page_obj.next_page_number }}{{ search_url }}">
+                        ›
+                    </a>
+                    <a title="Page {{ page_obj.paginator.num_pages }}"
+                        aria-label="Page {{ page_obj.paginator.num_pages }}"
+                        href="?page={{ page_obj.paginator.num_pages }}{{ search_url }}">
+                        »
+                    </a>
+                    {% else %}
+                    <span class="disabled">
+                        »
+                    </span>
+                    {% endif %}
+                </span>
+            </nav>
+
+        </div>
+    </div>
+</div>
+{% endif %}
