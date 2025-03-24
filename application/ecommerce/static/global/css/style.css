@@ -138,6 +138,51 @@ header {
 }
 
 
+/* Pagination Style */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.step-links {
+    display: flex;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+.step-links a {
+    padding: 8px 12px;
+    background-color: #ffcc00;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.step-links a:hover {
+    background-color: #e6b800;
+    transform: scale(1.1);
+}
+
+.step-links .current-page {
+    padding: 8px 12px;
+    background-color: #ddd;
+    color: #666;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.step-links .disabled {
+    padding: 8px 12px;
+    background-color: #ddd;
+    color: #999;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
 /* Estilos para a página Sobre */
 .about-container {
     max-width: 800px;
