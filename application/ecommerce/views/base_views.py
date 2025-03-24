@@ -25,4 +25,4 @@ def about(request):
 
 
 def category(request):
-    return render(request, 'ecommerce/index.html')
+    return render(request, 'ecommerce/category.html')
