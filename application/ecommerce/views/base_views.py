@@ -1,23 +1,21 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
 from ecommerce.models import Product
+from django.views.generic import ListView
+from django.shortcuts import redirect
+from django.db.models import Q
 # Create your views here.
 
-PER_PAGE = 18
+PER_PAGE = 12
 
 
-def index(request):
-    products = Product.objects.order_by('-id').filter(active=True).all()
+class ProductListView(ListView):
+    model = Product
+    template_name = 'ecommerce/index.html'
+    paginate_by = PER_PAGE
+    ordering = '-pk'
+    queryset = Product.objects.filter(active=True)
 
-    paginator = Paginator(products, PER_PAGE)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-
-    context = {
-        'page_obj': page_obj
-    }
-
-    return render(request, 'ecommerce/index.html', context)
 
 
 def about(request):
