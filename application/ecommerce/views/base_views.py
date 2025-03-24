@@ -5,6 +5,7 @@ from ecommerce.models import Product
 
 PER_PAGE = 6
 
+
 def index(request):
     products = Product.objects.order_by('-id').filter(active=True).all()
 
@@ -18,5 +19,10 @@ def index(request):
 
     return render(request, 'ecommerce/index.html', context)
 
+
 def about(request):
     return render(request, 'ecommerce/about.html')
+
+
+def category(request):
+    return render(request, 'ecommerce/index.html')
