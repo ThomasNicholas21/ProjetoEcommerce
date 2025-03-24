@@ -55,3 +55,36 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductVariation(models.Model):
+    class Meta:
+        verbose_name = 'Variation'
+        verbose_name_plural = 'Variations'
+
+    produto = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name = models.CharField(max_length=65)
+    product_image = models.ImageField(
+        upload_to="products/%Y/%m", 
+        blank=True, default=None,
+        validators=[is_png_svg,]
+        )
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    promotional_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    stock = models.IntegerField(blank=False, default=0, help_text="Coloque quantos produtos tem em estoque.")
+
+    def save(self, *args, **kwargs):
+        current_pruduct_image_name = str(self.product_image.name)
+        super_save = super().save(*args, **kwargs)
+        product_image_changed = False
+
+        if self.product_image:
+            product_image_changed = current_pruduct_image_name != self.product_image.name
+        
+        if product_image_changed:
+            resize_image(self.product_image)
+
+        return super_save
+    
+    def __str__(self):
+        return self.name
