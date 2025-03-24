@@ -3,6 +3,23 @@ from utils.slug.slug_gen import new_slug
 from utils.images.image_validator import resize_image
 from utils.validators.validate_image import is_png_svg
 
+
+class Category(models.Model):
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
+
+    name = models.CharField(max_length=45)
+    slug = models.SlugField(
+        max_length=255,
+        null=True, blank=True,
+        unique=True,
+        )
+    
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     PRODUCTS_TYPE = (
         ("S", 'Simples'),
