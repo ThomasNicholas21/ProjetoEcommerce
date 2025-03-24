@@ -104,33 +104,42 @@ header {
 
 /* Ícone do carrinho de compras */
 .cart-icon {
-    font-size: 1.5rem;
+    background-color: #ffcc00;
+    color: black;
     padding: 10px 15px;
-    color: white;
-    transition: color 0.3s;
+    border-radius: 5px;
+    transition: background-color 0.3s;
     cursor: pointer;
-}
-
-.cart-icon:hover a{
-    color: #ffcc00;
- }
-
-.font-shopping-cart {
-    font-family: "Quicksand", sans-serif;
-    font-size: 1.5rem;
-    color: white;
-    transition: color 0.2s;
-    cursor: pointer;
+    display: inline-block;
     text-decoration: none;
 }
 
+.cart-icon:hover {
+    background-color: #e6b800;
+}
+
+.cart-icon:hover a {
+    color: black; /* Mantém a cor preta no hover para consistência */
+}
+
+.font-shopping-cart {
+    font-family: "Quicksand", sans-serif;
+    font-size: 1rem;
+    color: black;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Login Estilization */
 .login-btn {
     background-color: #ffcc00;
     color: black;
     padding: 10px 15px;
     text-decoration: none;
     border-radius: 5px;
-    transition: background 0.3s;
+    transition: background-color 0.3s;
 }
 
 .login-btn:hover {
