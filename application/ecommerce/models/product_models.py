@@ -35,6 +35,7 @@ class Product(models.Model):
             )
     )
     stock = models.IntegerField(blank=False, default=0, help_text="Coloque quantos produtos tem em estoque.")
+    active = models.BooleanField(default=True, blank=False)
 
     def save(self, *args, **kwargs):
         if not self.slug:
