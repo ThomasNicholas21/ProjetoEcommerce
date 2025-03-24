@@ -1,5 +1,14 @@
 {% extends "global/base.html" %}
 {% block content %}
-    <h1>Teste</h1>
+
+<div class="product-container">
+    {% if page_obj %}
+        {% for product in page_obj %}
+            {% include "global/partials/_product_card.html" with i=forloop.counter0 %}
+        {% endfor %}
+    {% else %}
+        <h1 class="no-products"> Não encontramos nenhum produto 😢 </h1>
+    {% endif %}
+</div>
 {% endblock content %}
 
