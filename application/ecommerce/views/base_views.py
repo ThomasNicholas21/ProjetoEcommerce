@@ -3,7 +3,7 @@ from django.core.paginator import Paginator
 from ecommerce.models import Product
 # Create your views here.
 
-PER_PAGE = 6
+PER_PAGE = 18
 
 
 def index(request):
