@@ -14,10 +14,19 @@
         </ul>
     </nav>
     <div class="header-icons">
-        <div class="search-container">
-            <input type="text" placeholder="Pesquisar...">
-            <button>🔍</button>
-        </div>
+        <form action="{% url "ecommerce:search" %}" method="GET">
+            <div class="search-container">
+                <input 
+                placeholder="Pesquisar..."
+                type="search" 
+                name="q" 
+                id="search"
+                value="{{ search_value }}"
+                required
+                >
+                <button type="submit">🔍</button>
+            </div>
+        </form>
     
         <div class="cart-icon">
             <a href="#" class="font-shopping-cart"><i class="fas fa-shopping-cart"></i> QntProds </a>
