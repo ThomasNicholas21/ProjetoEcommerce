@@ -22,7 +22,7 @@ class Product(models.Model):
     long_description = models.TextField()
     product_image = models.ImageField(
         upload_to="products/%Y/%m", 
-        blank=True, default="",
+        blank=True, default="products/defaults/product_default.png",
         validators=[is_png_svg,]
         )
     price = models.DecimalField(max_digits=10, decimal_places=2)
