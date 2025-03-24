@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.core.paginator import Paginator
 from ecommerce.models import Product
 from django.views.generic import ListView
 from django.shortcuts import redirect
