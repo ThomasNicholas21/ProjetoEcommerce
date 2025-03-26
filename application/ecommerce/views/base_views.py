@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from ecommerce.models import Product
-from django.views.generic import ListView
+from ecommerce.models import Product, Category
+from django.views.generic import ListView, DetailView
 from django.shortcuts import redirect
-from django.db.models import Q
 # Create your views here.
 
 PER_PAGE = 14
@@ -59,3 +58,16 @@ def about(request):
 
 def category(request):
     return render(request, 'ecommerce/category.html')
+
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'ecommerce/category.html'
+    queryset = Category.objects.filter(product__active=True).all()
+
+
+class CategoryListView(ProductListView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        slug = self.kwargs.get('slug')
+        queryset = queryset.filter(category__slug=slug)
+        return queryset
