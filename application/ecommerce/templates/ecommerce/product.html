@@ -1,6 +1,9 @@
 {% extends "global/base.html" %}
 
 {% block content %}
+<!-- Guardamos os dados das variações -->
+<div id="product-data" data-variations='{{ variations_json|safe }}'></div>
+
 <div class="product-detail-container">
 
     <div class="product-main-info">
@@ -22,13 +25,20 @@
                     <span class="final-price">R$ {{ product.price }}</span>
                 {% endif %}
             </div>
-
-            <label for="variation">Escolha uma variação:</label>
-            <select id="variation" name="variation">
-                {% for variation in product.productvariation_set.all %}
-                    <option value="{{ variation.id }}">{{ variation.name }}</option>
-                {% endfor %}
-            </select>
+            
+            {% if product.product_type == "V" %}
+            <div class="dropdown-wrapper">
+                <label for="variation">Escolha uma variação:</label>
+                <select id="variation" name="variation" class="dropdown" onchange="updateProductInfo()">
+                    <option value="{{ product.id }}">{{ product.name }}</option>
+                    {% for variation in product.productvariation_set.all %}
+                        <option value="{{ variation.id }}">{{ variation.name }}</option>
+                    {% empty %}
+                        <option disabled>Nenhuma variação disponível</option>
+                    {% endfor %}
+                </select>
+            </div>
+            {% endif %}
             
 
             <!-- Botões de Ação -->
@@ -49,5 +59,36 @@
     </div>
 
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const variations = JSON.parse('{{ variations_json|safe }}');
+        const variationSelect = document.getElementById("variation");
+        const productImage = document.querySelector(".product-image");
+        const priceElement = document.querySelector(".final-price");
+        const originalPriceElement = document.querySelector(".original-price");
+        const discountedPriceElement = document.querySelector(".discounted-price");
+
+        variationSelect.addEventListener("change", function () {
+            const selectedVariation = variations.find(v => v.id == this.value);
+
+            if (selectedVariation) {
+                productImage.src = selectedVariation.image;
+
+                if (selectedVariation.promotional_price > 0) {
+                    originalPriceElement.textContent = `R$ ${selectedVariation.price.toFixed(2)}`;
+                    discountedPriceElement.textContent = `R$ ${selectedVariation.promotional_price.toFixed(2)}`;
+                    originalPriceElement.style.display = "inline";
+                    discountedPriceElement.style.display = "inline";
+                    priceElement.style.display = "none";
+                } else {
+                    priceElement.textContent = `R$ ${selectedVariation.price.toFixed(2)}`;
+                    priceElement.style.display = "inline";
+                    originalPriceElement.style.display = "none";
+                    discountedPriceElement.style.display = "none";
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}
 
