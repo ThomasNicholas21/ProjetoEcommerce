@@ -68,6 +68,11 @@ class Product(models.Model):
         
         if product_image_changed:
             resize_image(self.product_image)
+        
+        if self.product_type == "V":
+            variations_stock = self.productvariation_set.aggregate(total=models.Sum('stock'))
+            self.stock = variations_stock['total']
+            return super().save(update_fields=['stock'])
 
         return super_save
 
