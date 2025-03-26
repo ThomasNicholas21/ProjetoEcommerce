@@ -23,6 +23,14 @@
                 {% endif %}
             </div>
 
+            <label for="variation">Escolha uma variação:</label>
+            <select id="variation" name="variation">
+                {% for variation in product.productvariation_set.all %}
+                    <option value="{{ variation.id }}">{{ variation.name }}</option>
+                {% endfor %}
+            </select>
+            
+
             <!-- Botões de Ação -->
             <div class="product-actions">
                 <a href="#" class="btn buy-now">
