@@ -1,5 +1,26 @@
 {% extends "global/base.html" %}
 
 {% block content %}
-<h1> Categorias </h1>
+<div class="container">
+    <!-- Barra lateral de filtros -->
+    <aside class="sidebar">
+        <h3 class="filter-title">Filtrar por Categoria</h3>
+        <ul class="category-list">
+            {% for category in categories %}
+                <li class="category-item">
+                    <a href="?category={{ category.id }}" class="category-link">{{ category.name }}</a>
+                </li>
+            {% empty %}
+                <li class="category-item">Nenhuma categoria disponível</li>
+            {% endfor %}
+        </ul>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <div class="main-content">
+            {% block main_content %}
+                aaaaaaaaaaaaaaaaa
+            {% endblock %}
+    </div>
+</div>
 {% endblock content %}
