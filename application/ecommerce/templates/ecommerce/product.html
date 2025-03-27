@@ -36,7 +36,7 @@
             <div class="dropdown-wrapper">
                 <label for="variation">Escolha uma variação:</label>
                 <select id="variation" name="variation" class="dropdown" onchange="updateProductInfo()">
-                    <option value="{{ product.id }}">{{ product.name }}</option>
+                    <option>Selecione:</option>
                     {% for variation in product.productvariation_set.all %}
                         <option value="{{ variation.id }}">{{ variation.name }}</option>
                     {% empty %}
