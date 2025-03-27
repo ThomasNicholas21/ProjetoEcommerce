@@ -59,7 +59,7 @@ class Product(models.Model):
             'Já o produto "Variável" é um produto cujo possui variações, por exemplo, cores e tamanhos diferentes.'
             )
     )
-    stock = models.IntegerField(blank=False, default=0, help_text="Coloque quantos produtos tem em estoque.")
+    stock = models.IntegerField(blank=False, default=0, null=True, help_text="Coloque quantos produtos tem em estoque.")
     active = models.BooleanField(default=True, blank=False)
     category = models.ManyToManyField(Category, blank=True, default='')
 
