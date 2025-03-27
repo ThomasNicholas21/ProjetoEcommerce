@@ -265,7 +265,17 @@ header {
     text-align: center;
     color: #666;
     margin-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
+
+.no-products img {
+    max-height: 80px;
+    width: auto;
+}
+
 
 .shopping-cart-icon {
     color: black;
@@ -508,7 +518,6 @@ label {
 }
 
 .buy-now:hover {
-    border: 3px solid #333;
     background-color: #ffcc00;
     color: #333;
     transform: scale(1.05);
@@ -577,9 +586,14 @@ label {
 }
 
 .main-content {
-    display: flexbox;
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
     gap: 15px;
     padding: 20px;
+    height: fit-content;
+    /* margin: 0 auto; */
+
 }
 /* Sidebar estilizada */
 .sidebar {
