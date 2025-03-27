@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from ecommerce.models import Product, Category
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 from django.shortcuts import redirect
 # Create your views here.
 
@@ -9,7 +9,7 @@ PER_PAGE = 14
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'ecommerce/index.html'
+    template_name = 'ecommerce/page/index.html'
     paginate_by = PER_PAGE
     ordering = '-pk'
     queryset = Product.objects.filter(active=True)
@@ -54,17 +54,17 @@ class SearchProductView(ProductListView):
 
 
 def about(request):
-    return render(request, 'ecommerce/about.html')
+    return render(request, 'ecommerce/page/about.html')
 
 
 class CategoriesListView(ListView):
     model = Category
-    template_name = 'ecommerce/category.html'
+    template_name = 'ecommerce/page/category.html'
     context_object_name = 'categories'
     queryset = Category.objects.all()
 
 class CategoryProductListView(ProductListView):
-    template_name = 'ecommerce/category.html'
+    template_name = 'ecommerce/page/category.html'
 
     def get_queryset(self):
         slug = self.kwargs.get('slug')

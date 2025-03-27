@@ -6,7 +6,7 @@ import json
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'ecommerce/product.html'
+    template_name = 'ecommerce/detail/product.html'
     slug_field = 'slug'
     context_object_name = 'product'
     queryset = Product.objects.filter(active=True)
