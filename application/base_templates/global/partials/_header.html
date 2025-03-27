@@ -7,7 +7,7 @@
         <ul class="nav-links">
             <li class="{% if request.resolver_match.url_name == "index" %}active{% endif %}">
                 <a href="{% url "ecommerce:index" %}" >Home</a></li>
-            <li class="{% if request.resolver_match.url_name == "categories" %}active{% endif %}">
+            <li class="{% if request.resolver_match.url_name == "categories" or request.resolver_match.url_name == "category" %}active{% endif %}">
                 <a href="{% url "ecommerce:categories" %}" >Categorias</a></li>
             <li class="{% if request.resolver_match.url_name == "about" %}active{% endif %}">
                 <a href="{% url "ecommerce:about" %}" >Sobre</a></li>
