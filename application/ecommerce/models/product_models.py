@@ -11,10 +11,18 @@ class Category(models.Model):
 
     name = models.CharField(max_length=45)
     slug = models.SlugField(
-        max_length=255,
+        max_length=255, default=None,
         null=True, blank=True,
         unique=True,
         )
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = new_slug(self.name, 5)
+        else:
+            self.slug += new_slug('category', 5)
+
+        return super().save(*args, **kwargs)
     
     def __str__(self):
         return self.name
