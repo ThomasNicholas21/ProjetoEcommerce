@@ -382,6 +382,50 @@ header {
 }
 
 
+/* Estilização das Categorias */
+.product-categories {
+    margin-top: 15px;
+    max-width: 600px;
+    height: 75px;
+}
+
+.categories-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.categories-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.category-badge {
+    border: 3px solid #ffcc00;
+    background-color: white;
+    color: #333;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 20px;
+    display: inline-block;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-badge a{
+    text-decoration: none;
+    color: #333;
+}
+
+.category-badge:hover {
+    background-color: #ffcc00;
+    color: #333;
+    transform: scale(1.05);
+}
+
+
 /* dropdown */
 .dropdown-wrapper {
     display: flex;
@@ -403,7 +447,7 @@ label {
     max-width: 250px;
     padding: 10px;
     font-size: 1rem;
-    border: 2px solid #ffcc00;
+    border: 3px solid #ffcc00;
     border-radius: 5px;
     background-color: white;
     color: #333;
@@ -412,8 +456,8 @@ label {
 }
 
 .dropdown:hover {
-    border-color: #333;
     box-shadow: 0px 0px 5px #ffcc00;
+    transform: scale(1.05);
 }
 
 .dropdown:focus {
@@ -446,8 +490,9 @@ label {
 
 .add-to-cart {
     /* background-color: #28a745; */
-    border: 2px solid #ffcc00;
-    color: #ffcc00;
+    border: 3px solid #ffcc00;
+    color: #333;
+    background-color: white;
 }
 
 .add-to-cart:hover {
@@ -457,14 +502,15 @@ label {
 }
 
 .buy-now {
-    background-color: #ffcc00;
+    border: 3px solid #ffcc00;
     color: #333;
+    background-color: white;
 }
 
 .buy-now:hover {
-    border: 2px solid #ffcc00;
-    background-color: #ffffff;
-    color: #ffcc00;
+    border: 3px solid #333;
+    background-color: #ffcc00;
+    color: #333;
     transform: scale(1.05);
 }
 
