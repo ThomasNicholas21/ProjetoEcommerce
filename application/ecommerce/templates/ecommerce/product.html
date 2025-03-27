@@ -16,7 +16,6 @@
         <div class="product-info">
             <h1 class="product-title">{{ product.name }}</h1>
             <p class="product-short-description">{{ product.short_description }}</p>
-
             <div class="product-price">
                 {% if product.promotional_price %}
                     <span class="original-price">R$ {{ product.price }}</span>
@@ -25,7 +24,14 @@
                     <span class="final-price">R$ {{ product.price }}</span>
                 {% endif %}
             </div>
-            
+            <div class="product-categories">
+                <h3 class="categories-title">Categorias do produto:</h3>
+                <div class="categories-container">
+                    {% for category in product.category.all %}
+                        <span class="category-badge"><a href="{% url "ecommerce:category" category.slug %}">{{ category.name }}</a></span>
+                    {% endfor %}
+                </div>
+            </div>
             {% if product.product_type == "V" %}
             <div class="dropdown-wrapper">
                 <label for="variation">Escolha uma variação:</label>
