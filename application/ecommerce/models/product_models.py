@@ -20,7 +20,7 @@ class Category(models.Model):
         if not self.slug:
             self.slug = new_slug(self.name, 5)
         else:
-            self.slug += new_slug('category', 5)
+            self.slug += new_slug('category-', 5)
 
         return super().save(*args, **kwargs)
     
@@ -66,6 +66,8 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = new_slug(self.name, 5)
+        else:
+            self.slug += new_slug('product-', 5)
 
         current_pruduct_image_name = str(self.product_image.name)
         super_save = super().save(*args, **kwargs)
