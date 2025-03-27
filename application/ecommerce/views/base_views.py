@@ -61,7 +61,7 @@ class CategoriesListView(ListView):
     model = Category
     template_name = 'ecommerce/category.html'
     context_object_name = 'categories'
-    queryset = Category.objects.filter(product__active=True).all()
+    queryset = Category.objects.all()
 
 class CategoryProductListView(ProductListView):
     template_name = 'ecommerce/category.html'
