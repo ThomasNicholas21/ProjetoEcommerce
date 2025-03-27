@@ -7,8 +7,8 @@
         <h3 class="filter-title">Filtrar por Categoria</h3>
         <ul class="category-list">
             {% for category in categories %}
-                <li class="category-item">
-                    <a href="?category={{ category.id }}" class="category-link">{{ category.name }}</a>
+                <li class="category-item {% if category.slug == request.resolver_match.kwargs.slug %}active{% endif %}">
+                    <a href="{% url 'ecommerce:category' category.slug %}" class="category-link">{{ category.name }}</a>
                 </li>
             {% empty %}
                 <li class="category-item">Nenhuma categoria disponível</li>
@@ -18,9 +18,15 @@
 
     <!-- Conteúdo principal -->
     <div class="main-content">
-            {% block main_content %}
-                aaaaaaaaaaaaaaaaa
-            {% endblock %}
-    </div>
-</div>
+        {% if page_obj %}
+            {% for product in page_obj %}
+                {% include "global/partials/_product_card.html" with i=forloop.counter0 %}
+            {% endfor %}
+        {% else %}
+            <h1 class="no-products"> 
+                Clique em alguma categoria para filtrar por produtos 😎
+            </h1>
+        <!-- Listando todos os produtos sem filtro -->
+        {% endif %}
+
 {% endblock content %}
