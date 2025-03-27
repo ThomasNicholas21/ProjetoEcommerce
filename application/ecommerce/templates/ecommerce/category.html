@@ -16,7 +16,7 @@
         </ul>
     </aside>
 
-    <!-- Conteúdo principal -->
+<!-- Conteúdo principal -->
     <div class="main-content">
         {% if page_obj %}
             {% for product in page_obj %}
@@ -24,9 +24,10 @@
             {% endfor %}
         {% else %}
             <h1 class="no-products"> 
-                Clique em alguma categoria para filtrar por produtos 😎
+                Clique em alguma categoria para filtrar por produtos <img src="{{ site_config.logo.url }}" alt=" {{ site_config.logo.name }} ">
             </h1>
         <!-- Listando todos os produtos sem filtro -->
         {% endif %}
-
+    </div>
+</div>
 {% endblock content %}
