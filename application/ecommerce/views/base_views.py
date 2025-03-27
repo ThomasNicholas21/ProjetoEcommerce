@@ -52,12 +52,10 @@ class SearchProductView(ProductListView):
 
         return super().get(request, *args, **kwargs)
 
+
 def about(request):
     return render(request, 'ecommerce/about.html')
 
-
-def category(request):
-    return render(request, 'ecommerce/category.html')
 
 class CategoriesListView(ListView):
     model = Category
@@ -65,4 +63,21 @@ class CategoriesListView(ListView):
     context_object_name = 'categories'
     queryset = Category.objects.filter(product__active=True).all()
 
+class CategoryProductListView(ProductListView):
+    template_name = 'ecommerce/category.html'
+
+    def get_queryset(self):
+        slug = self.kwargs.get('slug')
+        return super().get_queryset().filter(category__slug=slug)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+
+        context.update(
+            {
+                'categories': categories,
+            }
+        )
+        return context
 
