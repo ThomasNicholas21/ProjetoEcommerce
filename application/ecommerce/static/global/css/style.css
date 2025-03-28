@@ -146,6 +146,96 @@ header {
     background-color: #e6b800;
 }
 
+/* Form Style */
+/* Estilização do formulário */
+.form-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilização dos grupos de entrada */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+
+    ul {
+        margin-left: 20px;
+    }
+  }
+  
+  .input-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  .help-text {
+    font-size: 14px;
+    color: #6c757d;
+    margin-top: 5px;
+  }
+  
+  /* Estilização dos erros */
+  .error-container {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+  }
+  
+  .error-message {
+    font-size: 14px;
+  }
+  
+  /* Estilização do botão de envio */
+  .submit-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .submit-button {
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: 3px solid #ffcc00;
+    color: #333;
+    background-color: #ffcc00;
+  }
+  
+  .submit-button:hover {
+    background-color: white;
+    color: #333;
+    transform: scale(1.05);
+  }
+
 /* Index Style */
 .product-container {
     display: flex;
