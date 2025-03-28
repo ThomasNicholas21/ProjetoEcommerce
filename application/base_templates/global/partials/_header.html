@@ -4,6 +4,17 @@
         <span> {{ site_config.name }} </span>
     </div>
     <nav>
+        {% if request.resolver_match.url_name == "register" %}
+        <ul class="nav-links">
+            <li class="{% if request.resolver_match.url_name == "index" %}active{% endif %}">
+                <a href="{% url "ecommerce:index" %}" >Home</a></li>
+            <!-- Será alterado depois para login -->
+            <li class="{% if request.resolver_match.url_name == "categories" or request.resolver_match.url_name == "category" %}active{% endif %}">
+                <a href="#" >Login</a></li>
+            <li class="{% if request.resolver_match.url_name == "register" %}active{% endif %}">
+                <a href="{% url "ecommerce:about" %}" >Cadastre-se</a></li>
+        </ul>
+        {% else %}
         <ul class="nav-links">
             <li class="{% if request.resolver_match.url_name == "index" %}active{% endif %}">
                 <a href="{% url "ecommerce:index" %}" >Home</a></li>
@@ -12,7 +23,9 @@
             <li class="{% if request.resolver_match.url_name == "about" %}active{% endif %}">
                 <a href="{% url "ecommerce:about" %}" >Sobre</a></li>
         </ul>
+        {% endif %}
     </nav>
+    {% if not request.resolver_match.url_name == "register" %}
     <div class="header-icons">
         <form action="{% url "ecommerce:search" %}" method="GET">
             <div class="search-container">
@@ -27,12 +40,30 @@
                 <button type="submit">🔍</button>
             </div>
         </form>
-    
+        
         <div class="cart-icon">
             <a href="#" class="font-shopping-cart"><i class="fas fa-shopping-cart"></i> QntProds </a>
         </div>
-        
-        <a href="{% url "ecommerce:register" %}" class="login-btn">Entrar</a>
+      
+        {% if user.is_authenticated %}
+            <a href="#" class="login-btn"> Perfil </a>
+        {% else %}
+            <a href="{% url "ecommerce:register" %}" class="login-btn">Entrar</a>
+        {% endif %}
 
     </div>
+    {% else %}
+    <div class="header-icons">
+        <div class="cart-icon">
+            <a href="#" class="font-shopping-cart"><i class="fas fa-shopping-cart"></i> QntProds </a>
+        </div>
+      
+        {% if user.is_authenticated %}
+            <a href="#" class="login-btn"> Perfil </a>
+        {% else %}
+            <a href="{% url "ecommerce:register" %}" class="login-btn">Entrar</a>
+        {% endif %}
+
+    </div>
+    {% endif %}
 </header>
