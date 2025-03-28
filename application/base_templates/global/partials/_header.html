@@ -45,7 +45,14 @@
         </div>
       
         {% if user.is_authenticated %}
-            <a href="#" class="login-btn"> Perfil </a>
+        <div class="profile-menu">
+            <a href="#" class="profile-btn">Perfil</a>
+            <div class="profile-dropdown">
+                <a href="#">Editar perfil</a>
+                <a href="#">Pedidos</a>
+                <a href="{% url "ecommerce:logout" %}">Logout</a>
+            </div>
+        </div>        
         {% else %}
             <a href="{% url "ecommerce:login" %}" class="login-btn">Entrar</a>
         {% endif %}
@@ -56,12 +63,8 @@
         <div class="cart-icon">
             <a href="#" class="font-shopping-cart"><i class="fas fa-shopping-cart"></i> QntProds </a>
         </div>
-      
-        {% if user.is_authenticated %}
-            <a href="#" class="login-btn"> Perfil </a>
-        {% else %}
-            <a href="{% url "ecommerce:login" %}" class="login-btn">Entrar</a>
-        {% endif %}
+
+        <a href="{% url "ecommerce:login" %}" class="login-btn">Entrar</a>
 
     </div>
     {% endif %}
