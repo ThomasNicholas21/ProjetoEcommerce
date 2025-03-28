@@ -1,6 +1,6 @@
 from django.urls import path
 from ecommerce.views import ProductListView, about, CategoriesListView, CategoryProductListView, ProductDetailView, SearchProductView
-from ecommerce.views import UserRegisterFormView, AuthenticationLoginFormView, LogoutView
+from ecommerce.views import UserRegisterFormView, AuthenticationLoginFormView, LogoutView, UserUpdateFormView
 
 app_name='ecommerce'
 
@@ -21,9 +21,9 @@ urlpatterns = [
     # User Login
     path('user/logout/', LogoutView.as_view(), name='logout'),
     # User Create
-    path('user/register/', UserRegisterFormView.as_view(), name='register'),
+    path('user/register/', UserRegisterFormView.as_view(), name='register_user'),
     # User Update
-    path('product/<slug:slug>', ProductDetailView.as_view(), name='product'),
+    path('product/update/', UserUpdateFormView.as_view(), name='update_user'),
     # User Delete
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product'),
 

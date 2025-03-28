@@ -48,7 +48,7 @@
         <div class="profile-menu">
             <a href="#" class="profile-btn">Perfil</a>
             <div class="profile-dropdown">
-                <a href="#">Editar perfil</a>
+                <a href="{% url "ecommerce:update_user" %}">Editar perfil</a>
                 <a href="#">Pedidos</a>
                 <a href="{% url "ecommerce:logout" %}">Logout</a>
             </div>
