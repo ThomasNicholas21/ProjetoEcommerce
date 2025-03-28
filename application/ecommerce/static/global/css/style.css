@@ -146,6 +146,62 @@ header {
     background-color: #e6b800;
 }
 
+/* Perfil Style */
+/* Estilização do botão de perfil */
+.profile-btn {
+    background-color: #ffcc00;
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    display: block;
+    width: 100px; /* Definindo largura fixa */
+    text-align: center;
+}
+
+/* Ajuste no hover */
+.profile-btn:hover {
+    background-color: #e6b800;
+}
+
+/* Wrapper do menu */
+.profile-menu {
+    position: relative;
+    display: inline-block;
+}
+
+/* Estilização do dropdown */
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    width: 100px; /* Igualando ao botão */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.profile-dropdown a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    width: 100%; /* Para ocupar toda a largura do dropdown */
+    transition: background-color 0.3s;
+}
+
+.profile-dropdown a:hover {
+    background-color: #ffcc00;
+}
+
+/* Exibir dropdown ao passar o mouse */
+.profile-menu:hover .profile-dropdown {
+    display: block;
+}
+
+
 /* Form Style */
 /* Estilização do formulário */
 .form-container {
