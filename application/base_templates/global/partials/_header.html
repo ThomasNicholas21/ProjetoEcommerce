@@ -4,14 +4,14 @@
         <span> {{ site_config.name }} </span>
     </div>
     <nav>
-        {% if request.resolver_match.url_name == "register" or request.resolver_match.url_name == "login" %}
+        {% if request.resolver_match.url_name == "register_user" or request.resolver_match.url_name == "login" %}
         <ul class="nav-links">
             <li class="{% if request.resolver_match.url_name == "index" %}active{% endif %}">
                 <a href="{% url "ecommerce:index" %}" >Home</a></li>
             <li class="{% if request.resolver_match.url_name == "login"%}active{% endif %}">
                 <a href="{% url "ecommerce:login" %}" >Login</a></li>
-            <li class="{% if request.resolver_match.url_name == "register" %}active{% endif %}">
-                <a href="{% url "ecommerce:register" %}" >Cadastre-se</a></li>
+            <li class="{% if request.resolver_match.url_name == "register_user" %}active{% endif %}">
+                <a href="{% url "ecommerce:register_user" %}" >Cadastre-se</a></li>
         </ul>
         {% else %}
         <ul class="nav-links">
@@ -24,7 +24,7 @@
         </ul>
         {% endif %}
     </nav>
-    {% if not request.resolver_match.url_name == "register" %}
+    {% if not request.resolver_match.url_name == "register_user" %}
     <div class="header-icons">
         <form action="{% url "ecommerce:search" %}" method="GET">
             <div class="search-container">
