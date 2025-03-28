@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
+from django.utils.safestring import mark_safe
+from django.contrib.auth import password_validation
 # forms here
 
 class RegisterForm(UserCreationForm):
@@ -13,6 +14,20 @@ class RegisterForm(UserCreationForm):
             'email', 'username',
             'password1', 'password2',
         )
+
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Insira seu usuário ...'
+            }
+        ),
+        label='Usuário',
+        required=True,
+        help_text=mark_safe(
+                "Use apenas caracteres alfanuméricos e os seguintes símbolos: @ . + - _<br>"
+                "Exemplos válidos: nome.sobre+nome@exemplo.com, usuario_123"
+        )
+    )
 
     first_name = forms.CharField(
         widget=forms.TextInput(
@@ -38,8 +53,33 @@ class RegisterForm(UserCreationForm):
                 'placeholder': 'Insira seu e-mail ...'
             },
         ),
-        label='E-mail'
+        label='E-mail',
+        required=True
     )
+
+    password1 = forms.CharField(
+        label='Senha',
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'new-password',
+                'placeholder': 'Insira sua senha ...',
+            }
+        ),
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    password2 = forms.CharField(
+        label='Confirme a senha',
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'new-password',
+                'placeholder': 'Confirme sua senha ...',
+            }
+        ),
+        strip=False,
+        help_text=('Coloque a mesma senha de antes, para verificação.'),
+    )
+
 
 
     def clean(self):
