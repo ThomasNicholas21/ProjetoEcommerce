@@ -13,7 +13,7 @@ class RegisterForm(UserCreationForm):
             'email', 'username',
             'password1', 'password2',
         )
-    
+
     first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
@@ -38,28 +38,9 @@ class RegisterForm(UserCreationForm):
                 'placeholder': 'Insira seu e-mail ...'
             },
         ),
-        label='Primeiro Nome'
+        label='E-mail'
     )
 
-    password1 = forms.PasswordInput(
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'Insira sua senha'
-            },
-        ),
-        help_text=password_validation.password_validators_help_text_html(),
-        label='Senha'
-    )
-
-    password2 = forms.PasswordInput(
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': 'Confirme sua senha'
-            },
-        ),
-        help_text=password_validation.password_validators_help_text_html(),
-        label='Senha'
-    )
 
     def clean(self):
         data = super().clean()
