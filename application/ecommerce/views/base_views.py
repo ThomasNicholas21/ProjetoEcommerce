@@ -4,7 +4,7 @@ from django.views.generic import ListView
 from django.shortcuts import redirect
 # Create your views here.
 
-PER_PAGE = 14
+PER_PAGE = 12
 
 
 class ProductListView(ListView):
