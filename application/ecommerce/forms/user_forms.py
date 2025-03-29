@@ -26,7 +26,10 @@ class RegisterForm(UserCreationForm):
         help_text=mark_safe(
                 "Use apenas caracteres alfanuméricos e os seguintes símbolos: @ . + - _<br>"
                 "Exemplos válidos: nome.sobre+nome@exemplo.com, usuario_123"
-        )
+        ),
+        error_messages={
+            "unique": ("Já existe um usuário com esse nome."),
+        },
     )
 
     first_name = forms.CharField(
@@ -135,6 +138,19 @@ class RegisterForm(UserCreationForm):
             self.add_error('email', msg_error)
 
         return email
+    
+    def clean_user(self):
+        data = self.cleaned_data
+        username = data.get('username')
+
+        if User.objects.filter(username=username).exists():
+            msg_error = ValidationError(
+                'Já existe um usuário com esse nome.',
+                code='Invalid'
+            )
+            self.add_error('email', msg_error)
+        
+        return username
 
 
 class UpdateUserForm(forms.ModelForm):
@@ -154,7 +170,10 @@ class UpdateUserForm(forms.ModelForm):
         help_text=mark_safe(
                 "Use apenas caracteres alfanuméricos e os seguintes símbolos: @ . + - _<br>"
                 "Exemplos válidos: nome.sobre+nome@exemplo.com, usuario_123"
-        )
+        ),
+        error_messages={
+            "unique": ("Já existe um usuário com esse nome."),
+        },
     )
 
     first_name = forms.CharField(
@@ -259,12 +278,12 @@ class UpdateUserForm(forms.ModelForm):
         current_email = self.instance.email
 
         if email != current_email:
-            if User.objects.filter(email=email):
-                msg_error = ValidationError(
+            if User.objects.filter(email=email).exists():
+                msg_error_email = ValidationError(
                     'Já existe uma conta com esse e-mail.',
                     code='Invalid'
                 )
-                self.add_error('email', msg_error)
+                self.add_error('email', msg_error_email)
 
         return email
 
@@ -275,10 +294,10 @@ class UpdateUserForm(forms.ModelForm):
 
         if username != current_username:
             if User.objects.filter(username=username).exists():
-                msg_error = ValidationError(
+                msg_error_username = ValidationError(
                     'Já existe um usuário com esse nome.',
                     code='Invalid'
                 )
-                self.add_error('email', msg_error)
+                self.add_error('username', msg_error_username)
         
         return username
