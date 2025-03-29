@@ -40,7 +40,9 @@ header {
 .nav-links {
     list-style: none;
     display: flex;
+    justify-content: center;
     gap: 20px;
+    width: 250px;
 }
 
 .nav-links li a {
@@ -342,6 +344,7 @@ header {
 }
 
 .card-text-wrapper {
+    max-width: 100%;
     padding: 10px;
 }
 
