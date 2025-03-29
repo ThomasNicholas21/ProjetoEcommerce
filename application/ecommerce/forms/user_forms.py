@@ -179,7 +179,7 @@ class UpdateUserForm(forms.ModelForm):
     password1 = forms.CharField(
         label='Senha',
         strip=False,
-        required=True,
+        required=False,
         widget=forms.PasswordInput(
             attrs={
                 'autocomplete': 'new-password',
@@ -189,7 +189,7 @@ class UpdateUserForm(forms.ModelForm):
     )
     password2 = forms.CharField(
         label='Confirme a senha',
-        required=True,
+        required=False,
         widget=forms.PasswordInput(
             attrs={
                 'autocomplete': 'new-password',
@@ -256,12 +256,29 @@ class UpdateUserForm(forms.ModelForm):
     def clean_email(self):
         data = self.cleaned_data
         email = data.get('email')
+        current_email = self.instance.email
 
-        if User.objects.filter(email=email):
-            msg_error = ValidationError(
-                'Já existe uma conta com esse e-mail.',
-                code='Invalid'
-            )
-            self.add_error('email', msg_error)
+        if email != current_email:
+            if User.objects.filter(email=email):
+                msg_error = ValidationError(
+                    'Já existe uma conta com esse e-mail.',
+                    code='Invalid'
+                )
+                self.add_error('email', msg_error)
 
         return email
+
+    def clean_user(self):
+        data = self.cleaned_data
+        username = data.get('username')
+        current_username = self.instance.username
+
+        if username != current_username:
+            if User.objects.filter(username=username).exists():
+                msg_error = ValidationError(
+                    'Já existe um usuário com esse nome.',
+                    code='Invalid'
+                )
+                self.add_error('email', msg_error)
+        
+        return username
