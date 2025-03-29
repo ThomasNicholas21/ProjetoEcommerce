@@ -63,7 +63,9 @@ header {
 .header-icons {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 15px;
+    width: 457px;
 }
 
 .search-container {
@@ -358,7 +360,11 @@ header {
     font-size: 0.9em;
     color: #666;
     margin-bottom: 10px;
-}
+    white-space: nowrap;       /* Mantém o texto em uma única linha */
+    overflow: hidden;          /* Oculta o conteúdo excedente */
+    text-overflow: ellipsis;   /* Adiciona "..." ao final */
+    width: 100%;               /* Garante que respeite a largura da div */
+}    
 
 .card-price {
     font-size: 1em;
