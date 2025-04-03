@@ -18,3 +18,13 @@ class Pedido(models.Model):
         )
     )
 
+
+class ItemPedido(models.Model):
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+    product_name = models.CharField(max_length=65)
+    product_id = models.PositiveBigIntegerField()
+    product_variation = models.CharField(max_length=65)
+    product_variation_id = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    product_amount = models.PositiveIntegerField(default=1)
+    imagem = models.CharField(max_length=2560)
