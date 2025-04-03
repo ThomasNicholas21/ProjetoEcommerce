@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from ecommerce.models import Product, Category
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.shortcuts import redirect
 # Create your views here.
 
@@ -53,8 +53,8 @@ class SearchProductView(ProductListView):
         return super().get(request, *args, **kwargs)
 
 
-def about(request):
-    return render(request, 'ecommerce/page/about.html')
+class AboutView(TemplateView):
+    template_name = 'ecommerce/page/about.html'
 
 
 class CategoriesListView(ListView):
