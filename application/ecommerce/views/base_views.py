@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from ecommerce.models import Product, Category
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import redirect
