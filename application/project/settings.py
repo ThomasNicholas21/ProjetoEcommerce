@@ -147,3 +147,8 @@ MESSAGE_TAGS = {
     constants.SUCCESS: 'alert-success',
     constants.WARNING: 'alert-warning',
 }
+
+# Sessão em dias: 60s 60m 24h 1d
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
+# Salvar cada requisição
+SESSION_SAVE_EVERY_REQUEST = False
