@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from django.contrib.messages import constants
 from pathlib import Path
 import os
 
@@ -139,3 +139,11 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = DATA_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MESSAGE_TAGS = {
+    constants.DEBUG: 'alert-info',
+    constants.ERROR: 'alert-danger',
+    constants.INFO: 'alert-info',
+    constants.SUCCESS: 'alert-success',
+    constants.WARNING: 'alert-warning',
+}
