@@ -1,6 +1,7 @@
 from django.urls import path
 from ecommerce.views import ProductListView, AboutView, CategoriesListView, CategoryProductListView, ProductDetailView, SearchProductView
 from ecommerce.views import UserRegisterFormView, AuthenticationLoginFormView, LogoutView, UserUpdateFormView
+from ecommerce.views import CartView
 
 app_name='ecommerce'
 
@@ -15,16 +16,13 @@ urlpatterns = [
     # Product Views
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product'),
 
+    # Carrinho
+    path('add_product_cart/', CartView.as_view(), name='post_cart'),
+
     # User Views
-    # User Login
     path('user/login/', AuthenticationLoginFormView.as_view(), name='login'),
-    # User Login
     path('user/logout/', LogoutView.as_view(), name='logout'),
-    # User Create
     path('user/register/', UserRegisterFormView.as_view(), name='register_user'),
-    # User Update
-    path('product/update/', UserUpdateFormView.as_view(), name='update_user'),
-    # User Delete
-    path('product/<slug:slug>', ProductDetailView.as_view(), name='product'),
+    path('user/update/', UserUpdateFormView.as_view(), name='update_user'),
 
 ]
