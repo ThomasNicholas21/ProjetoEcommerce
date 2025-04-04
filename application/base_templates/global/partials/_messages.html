@@ -1,0 +1,10 @@
+{% if messages %}
+    <br>
+    {% for message in messages %}
+    <div class='wrapper-alert'>
+        <div class="alert {{ message.tags }}" role="alert">
+            {{ message }} <img src="{{ site_config.logo.url }}" alt="{{ site_config.logo.name }}">
+        </div>
+    </div>    
+    {% endfor %}
+{% endif %}
