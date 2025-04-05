@@ -7,7 +7,7 @@ from ..models import ProductVariation
 # Create your views here.
 
 
-class CartView(View):
+class AddCartView(View):
     def get(self, *args, **kwargs):
         http_referer = self.request.META.get('HTTP_REFERER', reverse('ecommerce:index'))
         variation_id = self.request.GET.get('variation_id')
@@ -19,7 +19,14 @@ class CartView(View):
                 'Produto Inexistente!'
             )
             return redirect(http_referer)
-
+        
+        if not variation_id.isdigit():
+            messages.error(
+                self.request,
+                'Selecione um produto!'
+            )
+            return redirect(http_referer)
+        
         variation = get_object_or_404(ProductVariation, pk=variation_id)
         
         if not session_django.get('cart'):
