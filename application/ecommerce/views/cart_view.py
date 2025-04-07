@@ -28,30 +28,66 @@ class AddCartView(View):
             return redirect(http_referer)
         
         variation = get_object_or_404(ProductVariation, pk=variation_id)
+
+        if variation.stock < 1:
+            messages.error(
+                self.request,
+                'Produto em falta!'
+            )
+            return redirect('ecommerce:product', slug=variation.produto.slug)
+
+        produto = variation.produto
+        product_name = produto.name
+        product_id = produto.pk
+        product_variation = variation.name
+        product_variation_id = variation.pk
         
+        if produto.product_type == "S":
+            if produto.promotional_price:
+                price = produto.promotional_price
+            else:
+                price = produto.price
+        
+        elif produto.product_type == "V":
+            if variation.promotional_price:
+                price = variation.promotional_price
+            else:
+                price = variation.price
+        
+        amount = 1
+        slug = produto.slug
+
+        if produto.product_type == "S":
+            imagem = produto.product_image.name
+        
+        elif produto.product_type == "V":
+            imagem = variation.product_image.name
+
         if not session_django.get('cart'):
             session_django.setdefault('cart', {})
             session_django.save()
 
         cart = session_django.get('cart')
 
-        if variation.stock == 0:
-            messages.error(
-                self.request,
-                'Produto em falta!'
-            )
-            return redirect('ecommerce:product', slug=variation.produto.slug)
-        
-        """
-        pedido 
-        product_name 
-        product_id
-        product_variation 
-        product_variation_id
-        price
-        product_amount 
-        imagem 
-        """
+        if variation_id in cart:
+            pass
+        else:
+            cart.setdefault(
+                    variation_id,
+                    {
+                        'product_name': product_name,
+                        'product_id': product_id,
+                        'product_variation': product_variation,
+                        'product_variation_id': product_variation_id,
+                        'price': float(price),
+                        'amount': amount,
+                        'product_slug': slug,
+                        'imagem': imagem,
+                    }
+                )
+
+        self.request.session.save()
+
         return HttpResponse(
                 session_django.items()
                 )
