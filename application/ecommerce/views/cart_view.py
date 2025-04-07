@@ -3,11 +3,13 @@ from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.safestring import mark_safe
 from ..models import ProductVariation
+from pprint import pprint
 # Create your views here.
 
 
-class AddCartView(View):
+class AddVariationCartView(View):
     def get(self, *args, **kwargs):
         http_referer = self.request.META.get('HTTP_REFERER', reverse('ecommerce:index'))
         variation_id = self.request.GET.get('variation_id')
@@ -41,27 +43,11 @@ class AddCartView(View):
         product_id = produto.pk
         product_variation = variation.name
         product_variation_id = variation.pk
-        
-        if produto.product_type == "S":
-            if produto.promotional_price:
-                price = produto.promotional_price
-            else:
-                price = produto.price
-        
-        elif produto.product_type == "V":
-            if variation.promotional_price:
-                price = variation.promotional_price
-            else:
-                price = variation.price
-        
+        price = float(variation.price)
+        promotional_price = float(variation.promotional_price)
         amount = 1
         slug = produto.slug
-
-        if produto.product_type == "S":
-            imagem = produto.product_image.name
-        
-        elif produto.product_type == "V":
-            imagem = variation.product_image.name
+        imagem = variation.product_image.name
 
         if not session_django.get('cart'):
             session_django.setdefault('cart', {})
@@ -70,7 +56,24 @@ class AddCartView(View):
         cart = session_django.get('cart')
 
         if variation_id in cart:
-            pass
+            cart_amount = cart[variation_id].get('amount')
+            cart_amount += 1
+
+            if variation.stock < cart_amount:
+                messages.warning(
+                    self.request,
+                    mark_safe(
+                        f'Estoque do pruduto {variation.name} é insuficiente<br>'
+                        f'para adicionar no carrinho! Quantidade atual: {amount}'
+                    )
+                )
+                cart_amount = variation.stock
+            
+            cart[variation_id]['amount'] = cart_amount
+            cart[variation_id]['price'] = price * cart_amount
+            cart[variation_id]['promotional_price'] = promotional_price * cart_amount
+
+
         else:
             cart.setdefault(
                     variation_id,
@@ -79,7 +82,8 @@ class AddCartView(View):
                         'product_id': product_id,
                         'product_variation': product_variation,
                         'product_variation_id': product_variation_id,
-                        'price': float(price),
+                        'price': price,
+                        'promotional_price': promotional_price,
                         'amount': amount,
                         'product_slug': slug,
                         'imagem': imagem,
@@ -88,6 +92,12 @@ class AddCartView(View):
 
         self.request.session.save()
 
-        return HttpResponse(
-                session_django.items()
-                )
+        messages.success(
+            self.request,
+            'Produto adicionado ao carrinho!'
+        )
+
+        print(self.get_cart_amount(cart=cart))
+
+        return redirect(http_referer)
+    
