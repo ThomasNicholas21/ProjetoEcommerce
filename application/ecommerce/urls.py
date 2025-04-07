@@ -17,7 +17,8 @@ urlpatterns = [
     path('product/<slug:slug>', ProductDetailView.as_view(), name='product'),
 
     # Carrinho
-    path('add_variation_cart/', AddVariationCartView.as_view(), name='post_cart'),
+    path('add_compose_product_cart/', AddVariationCartView.as_view(), name='post_compose_product_cart'),
+    #path('add_simple_product_cart/', AddVariationCartView.as_view(), name='post_simple_product_cart'),
 
     # User Views
     path('user/login/', AuthenticationLoginFormView.as_view(), name='login'),

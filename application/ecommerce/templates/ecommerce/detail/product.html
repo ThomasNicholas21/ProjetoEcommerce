@@ -9,7 +9,7 @@
     <div class="product-main-info">
         <!-- Imagem do Produto -->
         <div class="product-image-wrapper">
-            <img class="product-image" src="{{ product.product_image.url }}" alt="Imagem do produto {{ product.name }}">
+            <img class="product-image" src="{{ product.productvariation_set.first.product_image.url }}" alt="Imagem do produto {{ product.name }}">
         </div>
 
         <!-- Informações do Produto -->
@@ -18,8 +18,8 @@
             <p class="product-short-description">{{ product.short_description }}</p>
             <div class="product-price">
                 {% if product.promotional_price %}
-                    <span class="original-price">R$ {{ product.price }}</span>
-                    <span class="discounted-price">R$ {{ product.promotional_price }}</span>
+                    <span class="original-price">R$ {{ product.productvariation_set.first.price }}</span>
+                    <span class="discounted-price">R$ {{ product.productvariation_set.first.promotional_price }}</span>
                 {% else %}
                     <span class="final-price">R$ {{ product.price }}</span>
                 {% endif %}
@@ -35,7 +35,7 @@
 
             <!-- FORMULÁRIO DE ADIÇÃO AO CARRINHO -->
             {% if product.product_type == "V" %}
-                <form action="{% url "ecommerce:post_cart" %}">
+                <form action="{% url "ecommerce:post_compose_product_cart" %}">
            
                     <div class="dropdown-wrapper">
                         <label for="variation">Escolha uma variação:</label>
@@ -61,16 +61,19 @@
                     </div>
                 </form>
             {% elif product.product_type == "S" %}
-                <form action="{% url "ecommerce:post_cart" %}">
+                <form action="{% url "ecommerce:post_compose_product_cart" %}">
     
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     <div class="product-actions">
-                        <a href="#" class="btn buy-now">
-                            Comprar Agora
-                        </a>
-                        <a href="#" class="btn add-to-cart">
+                        <button type="submit" class="btn buy-now">
+                            <a href="#" >
+                                Comprar Agora
+                            </a>
+                        </button>
+  
+                        <button type="submit" class="btn add-to-cart">
                             <i class="fas fa-shopping-cart"></i> Adicionar ao Carrinho
-                        </a>
+                        </button>
                     </div>
                 </form>
             {% endif %}

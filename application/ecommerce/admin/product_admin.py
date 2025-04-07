@@ -10,10 +10,10 @@ class VariationsTabularInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = 'id', 'name', 'price', 'promotional_price',
-    list_display_links = 'name',
-    list_editable = 'price', 'promotional_price',
-    search_fields = 'name', 'category__name'
+    list_display = 'id', 'name',
+    list_display_links = 'id', 'name',
+    readonly_fields = ('stock',)
+    search_fields = 'category__name',
     list_filter = 'category',
     prepopulated_fields = {'slug': ('name',)}
     autocomplete_fields = 'category',
@@ -27,9 +27,6 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = 'id', 'name', 'slug',
     list_per_page = 10
     ordering = '-id',
-    prepopulated_fields = {
-        'slug': ('name',),
-    }
 
 
 @admin.register(ProductVariation)
