@@ -1,11 +1,9 @@
 from django.views import View
-from django.http import HttpResponse
 from django.urls import reverse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.safestring import mark_safe
 from ..models import ProductVariation
-from pprint import pprint
 # Create your views here.
 
 
@@ -63,8 +61,8 @@ class AddVariationCartView(View):
                 messages.warning(
                     self.request,
                     mark_safe(
-                        f'Estoque do pruduto {variation.name} é insuficiente<br>'
-                        f'para adicionar no carrinho! Quantidade atual: {amount}'
+                        f'Estoque do pruduto<br>'
+                        f'<li>{variation.name} é insuficiente</li>'
                     )
                 )
                 cart_amount = variation.stock
@@ -96,8 +94,6 @@ class AddVariationCartView(View):
             self.request,
             'Produto adicionado ao carrinho!'
         )
-
-        print(self.get_cart_amount(cart=cart))
 
         return redirect(http_referer)
     
