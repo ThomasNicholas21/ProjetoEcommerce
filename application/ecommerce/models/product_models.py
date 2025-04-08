@@ -29,10 +29,6 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    PRODUCTS_TYPE = (
-        ("S", 'Simples'),
-        ("V", 'Variável'),
-    )
     class Meta:
         verbose_name = 'Product'
         verbose_name_plural = 'Products'
@@ -45,13 +41,6 @@ class Product(models.Model):
         )
     short_description = models.CharField(max_length=128)
     long_description = models.TextField()
-    product_type = models.CharField(
-        default=None, max_length=1, choices=PRODUCTS_TYPE,
-        help_text=mark_safe(
-            'Produto "Simples" não possui variações, sendo ele único.<br>'
-            'Já o produto "Variável" é um produto cujo possui variações, por exemplo, cores e tamanhos diferentes.'
-            )
-    )
     stock = models.IntegerField(
         blank=False, 
         default=0, 
@@ -71,7 +60,7 @@ class Product(models.Model):
 
         super_save = super().save(*args, **kwargs)
         
-        if self.product_type == "V":
+        if self.productvariation_set:
             variations_stock = self.productvariation_set.aggregate(total=models.Sum('stock'))
             self.stock = variations_stock['total']
             return super().save(update_fields=['stock'])
