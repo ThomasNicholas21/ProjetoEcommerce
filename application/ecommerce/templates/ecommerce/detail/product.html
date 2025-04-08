@@ -38,7 +38,7 @@
                 </div>
             </div>
 
-            <form action="{% url "ecommerce:post_compose_product_cart" %}" method="post">
+            <form action="{% url "ecommerce:post_compose_product_cart" %}">
                 <div class="dropdown-wrapper">
                     {% with variations=product.productvariation_set.all %}
                         {% if variations|length == 1 %}
