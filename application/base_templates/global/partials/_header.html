@@ -41,7 +41,7 @@
         </form>
         
         <div class="cart-icon">
-            <a href="#" class="font-shopping-cart"><i class="fas fa-shopping-cart"></i> {{ cart_amount }}x </a>
+            <a href="{% url "ecommerce:get_products_cart" %}" class="font-shopping-cart"><i class="fas fa-shopping-cart"></i> {{ cart_amount }}x </a>
         </div>
       
         {% if user.is_authenticated %}
