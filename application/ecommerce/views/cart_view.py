@@ -1,4 +1,5 @@
 from django.views import View
+from django.views.generic import TemplateView
 from django.urls import reverse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
@@ -37,6 +38,7 @@ class AddVariationCartView(View):
             return redirect('ecommerce:product', slug=variation.produto.slug)
 
         produto = variation.produto
+        stock = variation.stock
         product_name = produto.name
         product_id = produto.pk
         product_variation = variation.name
@@ -53,16 +55,18 @@ class AddVariationCartView(View):
 
         cart = session_django.get('cart')
 
+
         if variation_id in cart:
             cart_amount = cart[variation_id].get('amount')
             cart_amount += 1
 
-            if variation.stock < cart_amount:
+            if stock < cart_amount:
                 messages.warning(
                     self.request,
                     mark_safe(
-                        f'Estoque do pruduto<br>'
-                        f'<li>{variation.name} é insuficiente</li>'
+                        f'Estoque insuficiente para {cart_amount}x no '
+                        f'produto "{product_name}". Adicionamos {stock}x '
+                        f'no seu carrinho.'
                     )
                 )
                 cart_amount = variation.stock
@@ -70,6 +74,12 @@ class AddVariationCartView(View):
             cart[variation_id]['amount'] = cart_amount
             cart[variation_id]['price'] = price * cart_amount
             cart[variation_id]['promotional_price'] = promotional_price * cart_amount
+
+            messages.success(
+                self.request,
+                'Produto adicionado ao carrinho!'
+            )
+
 
 
         else:
@@ -87,13 +97,15 @@ class AddVariationCartView(View):
                         'imagem': imagem,
                     }
                 )
+            messages.success(
+                self.request,
+                'Produto adicionado ao carrinho!'
+            )
 
         self.request.session.save()
 
-        messages.success(
-            self.request,
-            'Produto adicionado ao carrinho!'
-        )
-
         return redirect(http_referer)
+    
+
+
     
