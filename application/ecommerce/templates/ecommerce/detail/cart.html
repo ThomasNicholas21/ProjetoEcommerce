@@ -1,5 +1,115 @@
 {% extends "global/base.html" %}
-
+{% load static %}
 {% block content %}
-    {{ request.session.cart }}
+<div class="cart-container">
+    <h2>Seu Carrinho</h2>
+
+    {% if request.session.cart %}
+        {% for item in request.session.cart.values %}
+            <div class="cart-item">
+                <div class="cart-item-image">
+                    <img src="{% get_media_prefix %}{{ item.imagem }}" alt="{{ item.product_name }}">
+                </div>
+                <div class="cart-item-details">
+                    <h3 class="product-name">{{ item.product_name }}</h3>
+                    {% if item.product_variation %}
+                        <p class="variation">Variação: {{ item.product_variation }}</p>
+                    {% endif %}
+                    <p class="price">
+                        {% if item.promotional_price %}
+                            <span class="original-price">R$ {{ item.price }}</span>
+                            <span class="promo-price">R$ {{ item.promotional_price }}</span>
+                        {% else %}
+                            <span class="normal-price">R$ {{ item.price }}</span>
+                        {% endif %}
+                    </p>
+
+                    <div class="quantity-controls">
+                        <form action="#" class="quantity-form">
+                            <input type="hidden" name="variation_id" value="{{ item.product_variation_id }}">
+                            <button type="submit" name="action" value="decrease" class="btn quantity-btn">-</button>
+                            <span class="amount">{{ item.amount }}</span>
+                            <button type="submit" name="action" value="increase" class="btn quantity-btn">+</button>
+                        </form>
+                    </div>
+
+                    <div class="cart-actions">
+                        <form action="#">
+                            <input type="hidden" name="variation_id" value="{{ item }}">
+                            <button type="submit" class="btn remove-btn">Remover</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="cart-footer">
+            <form action="#" method="get">
+                <button type="submit" class="btn buy-now">Fechar Pedido</button>
+            </form>
+        </div>
+    {% else %}
+        <p>Seu carrinho está vazio.</p>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const forms = document.querySelectorAll('.quantity-form');
+    
+        forms.forEach(form => {
+            const decreaseBtn = form.querySelector('button[name="action"][value="decrease"]');
+            const increaseBtn = form.querySelector('button[name="action"][value="increase"]');
+            const amountSpan = form.querySelector('.amount');
+            const variationId = form.querySelector('input[name="variation_id"]').value;
+    
+            const amountInput = document.createElement('input');
+            amountInput.type = 'hidden';
+            amountInput.name = `amount_${variationId}`;
+            amountInput.value = amountSpan.textContent.trim();
+            form.appendChild(amountInput);
+    
+            // Seleciona os preços no DOM
+            const priceWrapper = form.closest('.cart-item-details').querySelector('.price');
+            const originalPriceEl = priceWrapper.querySelector('.original-price');
+            const promoPriceEl = priceWrapper.querySelector('.promo-price');
+            const normalPriceEl = priceWrapper.querySelector('.normal-price');
+            
+            const originalPrice = originalPriceEl ? (parseFloat(originalPriceEl.textContent.replace('R$', '').trim().replace(',', '.')) / parseInt(amountSpan.textContent) ) : null;
+            const promoPrice = promoPriceEl ? parseFloat(promoPriceEl.textContent.replace('R$', '').trim().replace(',', '.') / parseInt(amountSpan.textContent) ) : null;
+            const normalPrice = normalPriceEl ? parseFloat(normalPriceEl.textContent.replace('R$', '').trim().replace(',', '.') / parseInt(amountSpan.textContent) ) : null;
+    
+            const updatePrices = (amount) => {
+                if (originalPriceEl && promoPriceEl) {
+                    originalPriceEl.textContent = `R$ ${(originalPrice * amount).toFixed(2).replace('.', ',')}`;
+                    promoPriceEl.textContent = `R$ ${(promoPrice * amount).toFixed(2).replace('.', ',')}`;
+                } else if (normalPriceEl) {
+                    normalPriceEl.textContent = `R$ ${(normalPrice * amount).toFixed(2).replace('.', ',')}`;
+                }
+            };
+    
+            decreaseBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let amount = parseInt(amountSpan.textContent);
+                if (amount > 1) {
+                    amount -= 1;
+                    amountSpan.textContent = amount;
+                    amountInput.value = amount;
+                    updatePrices(amount);
+                }
+            });
+    
+            increaseBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                let amount = parseInt(amountSpan.textContent);
+                amount += 1;
+                amountSpan.textContent = amount;
+                amountInput.value = amount;
+                updatePrices(amount);
+            });
+        });
+    });
+</script>
+    
+    
 {% endblock content %}
