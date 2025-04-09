@@ -107,5 +107,6 @@ class AddVariationCartView(View):
         return redirect(http_referer)
     
 
-
+class CartView(TemplateView):
+    template_name = 'ecommerce/detail/cart.html'
     
