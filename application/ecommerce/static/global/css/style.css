@@ -555,8 +555,7 @@ header {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-
+    position: relative;
 }
 
 .cart-item-image img {
@@ -595,45 +594,81 @@ header {
 }
 
 .quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
     margin: 1rem 0;
 }
 
-.amount {
-    min-width: 30px;
-    text-align: center;
+.quantity-form {
+    width: fit-content;
+}
+
+.quantity-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ffcc00;
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 .quantity-btn {
-    color: #333 !important;
+    background-color: #f9f9f9;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    color: #333;
 }
 
 .quantity-btn:hover {
     background-color: #ffcc00;
-    color: #333;
     transform: scale(1.05);
 }
 
-.cart-actions {
-    margin-top: 0.5rem;
-}
-
-.remove-btn {
-    background-color: #ffcc00;
-    color: #333 !important;
-}
-
-.remove-btn:hover {
-    background-color: #f44336;
+.amount {
+    padding: 0 1rem;
+    text-align: center;
+    min-width: 40px;
+    font-weight: bold;
     color: #333;
 }
+
 
 .cart-footer {
     margin-top: 2rem;
     text-align: right;
 }
+
+
+/* NOVOS ESTILOS PARA A LIXEIRA */
+.delete-form {
+    position: absolute;
+    top: 10px;
+    left: 97%;
+    z-index: 10;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.delete-btn svg {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.2s ease;
+}
+
+.delete-btn:hover svg {
+    transform: scale(1.5);
+}
+
+
 
 /* Product style*/
 /* Container Principal */
