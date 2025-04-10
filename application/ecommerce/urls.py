@@ -1,7 +1,7 @@
 from django.urls import path
 from ecommerce.views import ProductListView, AboutView, CategoriesListView, CategoryProductListView, ProductDetailView, SearchProductView
 from ecommerce.views import UserRegisterFormView, AuthenticationLoginFormView, LogoutView, UserUpdateFormView
-from ecommerce.views import AddVariationCartView, CartView
+from ecommerce.views import AddVariationCartView, CartView, AlterProductUnitCart
 
 app_name='ecommerce'
 
@@ -19,6 +19,8 @@ urlpatterns = [
     # Carrinho
     path('add_product_cart/', AddVariationCartView.as_view(), name='post_product_cart'),
     path('get_products_cart/', CartView.as_view(), name='get_products_cart'),
+    path('alter_product_cart/', AlterProductUnitCart.as_view(), name='alter_product_unit_cart'),
+
 
 
     # User Views

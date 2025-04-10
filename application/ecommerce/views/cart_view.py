@@ -3,6 +3,8 @@ from django.views.generic import TemplateView
 from django.urls import reverse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
+from django.http import HttpResponse
+from pprint import pprint
 from django.utils.safestring import mark_safe
 from ..models import ProductVariation
 # Create your views here.
@@ -70,15 +72,16 @@ class AddVariationCartView(View):
                     )
                 )
                 cart_amount = variation.stock
-            
-            cart[variation_id]['amount'] = cart_amount
-            cart[variation_id]['price'] = price * cart_amount
-            cart[variation_id]['promotional_price'] = promotional_price * cart_amount
 
-            messages.success(
-                self.request,
-                'Produto adicionado ao carrinho!'
-            )
+            else:
+                cart[variation_id]['amount'] = cart_amount
+                cart[variation_id]['price'] = price * cart_amount
+                cart[variation_id]['promotional_price'] = promotional_price * cart_amount
+
+                messages.success(
+                    self.request,
+                    'Produto adicionado ao carrinho!'
+                )
 
 
 
@@ -109,4 +112,81 @@ class AddVariationCartView(View):
 
 class CartView(TemplateView):
     template_name = 'ecommerce/detail/cart.html'
+
+
+class AlterProductUnitCart(View):
+    def get(self, *args, **kwargs):
+        http_referer = self.request.META.get('HTTP_REFERER', reverse('ecommerce:index'))
+        variation_id = self.request.GET.get('variation_id')
+        action = self.request.GET.get('action')
+
+        if not variation_id:
+            messages.error(
+                self.request,
+                'Produto Inexistente!'
+            )
+            return redirect(http_referer)
+        
+        if not variation_id.isdigit():
+            messages.error(
+                self.request,
+                'Selecione um produto!'
+            )
+            return redirect(http_referer)
+        
+        cart = self.request.session['cart']
+        variation = get_object_or_404(ProductVariation, pk=variation_id)
+        produto = variation.produto
+        stock = variation.stock
+        product_name = produto.name
+
+        if variation_id not in cart:
+            messages.error(
+                self.request,
+                'Produto não está no carrinho!'
+            )
+            return redirect(http_referer)
+
+        cart_amount = cart[variation_id].get('amount')
+        unit_price = cart[variation_id]['price'] / cart_amount
+        unit_promotional_price = cart[variation_id]['promotional_price'] / cart_amount
+        total_price = cart[variation_id]['price']
+        total_promotional_price = cart[variation_id]['promotional_price'] 
+
+        if action == 'increase': 
+            if variation.stock <= cart_amount:
+                messages.warning(
+                    self.request,
+                    mark_safe(
+                        f'Estoque insuficiente para {cart_amount + 1}x no '
+                        f'produto "{product_name}". Adicionamos {stock}x '
+                        f'no seu carrinho.'
+                    )
+                )
+                cart_amount = variation.stock
+
+            else:
+                cart_amount += 1
+                cart[variation_id]['amount'] = cart_amount
+                cart[variation_id]['price'] = total_price + unit_price
+                cart[variation_id]['promotional_price'] = total_promotional_price + unit_promotional_price
+
+        elif action == 'decrease':
+            if cart_amount == 1:
+                messages.success(
+                        self.request,
+                        'Produto excluido do seu carrinho!'
+                    )
+                del self.request.session['cart'][variation_id]
+
+            else:
+                cart_amount -= 1
+                cart[variation_id]['amount'] = cart_amount
+                cart[variation_id]['price'] = total_price - unit_price
+                cart[variation_id]['promotional_price'] = total_promotional_price - unit_promotional_price
+
+        self.request.session.save()
+
+        return redirect(http_referer)
+    
     

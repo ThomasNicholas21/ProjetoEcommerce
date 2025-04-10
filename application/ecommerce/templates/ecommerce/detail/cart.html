@@ -1,5 +1,6 @@
 {% extends "global/base.html" %}
 {% load static %}
+
 {% block content %}
 <div class="cart-container">
     <h2>Seu Carrinho</h2>
@@ -25,7 +26,7 @@
                     </p>
 
                     <div class="quantity-controls">
-                        <form action="#" class="quantity-form">
+                        <form action="{% url "ecommerce:alter_product_unit_cart" %}" class="quantity-form">
                             <input type="hidden" name="variation_id" value="{{ item.product_variation_id }}">
                             <button type="submit" name="action" value="decrease" class="btn quantity-btn">-</button>
                             <span class="amount">{{ item.amount }}</span>
@@ -34,8 +35,8 @@
                     </div>
 
                     <div class="cart-actions">
-                        <form action="#">
-                            <input type="hidden" name="variation_id" value="{{ item }}">
+                        <form action="{% url "ecommerce:alter_product_unit_cart" %}">
+                            <input type="hidden" name="variation_id" value="{{ item.product_variation_id }}">
                             <button type="submit" class="btn remove-btn">Remover</button>
                         </form>
                     </div>
@@ -56,60 +57,46 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const forms = document.querySelectorAll('.quantity-form');
-    
-        forms.forEach(form => {
+
+        function debounce(callback, delay) {
+            let timer;
+            return function (...args) {
+                clearTimeout(timer);
+                timer = setTimeout(() => callback.apply(this, args), delay);
+            };
+        }
+
+        forms.forEach((form) => {
             const decreaseBtn = form.querySelector('button[name="action"][value="decrease"]');
             const increaseBtn = form.querySelector('button[name="action"][value="increase"]');
-            const amountSpan = form.querySelector('.amount');
-            const variationId = form.querySelector('input[name="variation_id"]').value;
-    
-            const amountInput = document.createElement('input');
-            amountInput.type = 'hidden';
-            amountInput.name = `amount_${variationId}`;
-            amountInput.value = amountSpan.textContent.trim();
-            form.appendChild(amountInput);
-    
-            // Seleciona os preços no DOM
-            const priceWrapper = form.closest('.cart-item-details').querySelector('.price');
-            const originalPriceEl = priceWrapper.querySelector('.original-price');
-            const promoPriceEl = priceWrapper.querySelector('.promo-price');
-            const normalPriceEl = priceWrapper.querySelector('.normal-price');
-            
-            const originalPrice = originalPriceEl ? (parseFloat(originalPriceEl.textContent.replace('R$', '').trim().replace(',', '.')) / parseInt(amountSpan.textContent) ) : null;
-            const promoPrice = promoPriceEl ? parseFloat(promoPriceEl.textContent.replace('R$', '').trim().replace(',', '.') / parseInt(amountSpan.textContent) ) : null;
-            const normalPrice = normalPriceEl ? parseFloat(normalPriceEl.textContent.replace('R$', '').trim().replace(',', '.') / parseInt(amountSpan.textContent) ) : null;
-    
-            const updatePrices = (amount) => {
-                if (originalPriceEl && promoPriceEl) {
-                    originalPriceEl.textContent = `R$ ${(originalPrice * amount).toFixed(2).replace('.', ',')}`;
-                    promoPriceEl.textContent = `R$ ${(promoPrice * amount).toFixed(2).replace('.', ',')}`;
-                } else if (normalPriceEl) {
-                    normalPriceEl.textContent = `R$ ${(normalPrice * amount).toFixed(2).replace('.', ',')}`;
+            const variationInput = form.querySelector('input[name="variation_id"]');
+            const actionInput = form.querySelector('input[name="action"]');
+
+            const submitWithAction = (action) => {
+                if (actionInput) {
+                    actionInput.value = action;
+                } else {
+                    const hidden = document.createElement('input');
+                    hidden.type = 'hidden';
+                    hidden.name = 'action';
+                    hidden.value = action;
+                    form.appendChild(hidden);
                 }
+                form.submit();
             };
-    
-            decreaseBtn.addEventListener('click', (e) => {
+
+            const debouncedSubmit = debounce(submitWithAction, 300);
+
+            increaseBtn?.addEventListener('click', (e) => {
                 e.preventDefault();
-                let amount = parseInt(amountSpan.textContent);
-                if (amount > 1) {
-                    amount -= 1;
-                    amountSpan.textContent = amount;
-                    amountInput.value = amount;
-                    updatePrices(amount);
-                }
+                debouncedSubmit('increase');
             });
-    
-            increaseBtn.addEventListener('click', (e) => {
+
+            decreaseBtn?.addEventListener('click', (e) => {
                 e.preventDefault();
-                let amount = parseInt(amountSpan.textContent);
-                amount += 1;
-                amountSpan.textContent = amount;
-                amountInput.value = amount;
-                updatePrices(amount);
+                debouncedSubmit('decrease');
             });
         });
     });
-</script>
-    
-    
+</script> 
 {% endblock content %}
