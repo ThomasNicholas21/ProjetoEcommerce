@@ -190,3 +190,43 @@ class AlterProductUnitCart(View):
         return redirect(http_referer)
     
     
+class DeleteProductView(View):
+    def get(self, *args, **kwargs):
+        http_referer = self.request.META.get('HTTP_REFERER', reverse('ecommerce:index'))
+        variation_id = self.request.GET.get('variation_id')
+        action = self.request.GET.get('action')
+
+        if not variation_id:
+            messages.error(
+                self.request,
+                'Produto Inexistente!'
+            )
+            return redirect(http_referer)
+        
+        if not variation_id.isdigit():
+            messages.error(
+                self.request,
+                'Selecione um produto!'
+            )
+            return redirect(http_referer)
+        
+        cart = self.request.session['cart']
+
+        if variation_id not in cart:
+            messages.error(
+                self.request,
+                'Produto não está no carrinho!'
+            )
+            return redirect(http_referer)
+
+
+        del self.request.session['cart'][variation_id]
+
+        messages.success(
+            self.request,
+            'Produto excluido do seu carrinho!'
+        )
+
+        self.request.session.save()
+
+        return redirect(http_referer)
