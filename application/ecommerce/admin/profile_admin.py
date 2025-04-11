@@ -11,3 +11,4 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = 'user__username',
     list_per_page = 10
     ordering = '-id',
+    readonly_fields = 'created_at', 'updated_at', 
