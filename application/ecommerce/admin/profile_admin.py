@@ -1,6 +1,5 @@
 from django.contrib import admin
-from ecommerce.models.profile_models import UserProfile
-from django.contrib.auth.models import User
+from ecommerce.models.profile_models import UserProfile, UserProfileAdress
 
 # Register your models here.
 
@@ -12,3 +11,8 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_per_page = 10
     ordering = '-id',
     readonly_fields = 'created_at', 'updated_at', 
+
+
+@admin.register(UserProfileAdress)
+class UserProfileAdressAdmin(admin.ModelAdmin):
+    ...
