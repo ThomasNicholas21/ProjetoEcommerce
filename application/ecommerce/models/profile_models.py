@@ -2,6 +2,7 @@ from django.db import models
 from utils.files.name_file import get_file_name
 from utils.images.image_validator import resize_image
 from utils.validators.validate_image import is_png_svg
+from utils.validators.validate_cpf import cpf_validator
 from django.contrib.auth.models import User
 
 
@@ -57,20 +58,25 @@ class UserProfile(models.Model):
         blank=True, 
         null=True,
         validators=[is_png_svg], 
+        verbose_name='Foto de perfil',
         )
     cpf = models.CharField(
-        max_length=14, 
+        max_length=11, 
         blank=False, 
-        null=True
+        null=True,
+        validators=[cpf_validator],
+        help_text='Apenas números, sem pontos ou traços',
         )
     phone = models.CharField(
         max_length=15, 
         blank=False, 
-        null=True
+        null=True,
+        verbose_name='Telefone',
         )
     birth_date = models.DateField(
         blank=True, 
-        null=True
+        null=True,
+        verbose_name='Data de Nascimento',
         )
     address = models.OneToOneField(
         UserProfileAdress, 
@@ -113,7 +119,8 @@ class UserProfile(models.Model):
                     ('EX', 'Estrangeiro'),
                 ), 
                 blank=True, 
-                null=True
+                null=True,
+                verbose_name='Estado',
             )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
