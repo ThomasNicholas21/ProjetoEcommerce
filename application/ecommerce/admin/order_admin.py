@@ -1,13 +1,13 @@
 from django.contrib import admin
-from models.order_models import Pedido, ItemPedido
+from ecommerce.models.order_models import Order, OrderItem
 # Register your models here.
 
 
-@admin.register(Pedido)
+@admin.register(Order)
 class UserProfileAdmin(admin.ModelAdmin):
     ...
 
 
-@admin.register(ItemPedido)
+@admin.register(OrderItem)
 class UserProfileAdmin(admin.ModelAdmin):
     ...

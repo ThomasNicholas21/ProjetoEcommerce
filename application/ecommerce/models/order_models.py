@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Pedido(models.Model):
+class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total_value = models.FloatField()
     status = models.CharField(
@@ -19,8 +19,8 @@ class Pedido(models.Model):
     )
 
 
-class ItemPedido(models.Model):
-    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE)
+class OrderItem(models.Model):
+    pedido = models.ForeignKey(Order, on_delete=models.CASCADE)
     product_name = models.CharField(max_length=65)
     product_id = models.PositiveBigIntegerField()
     product_variation = models.CharField(max_length=65)
