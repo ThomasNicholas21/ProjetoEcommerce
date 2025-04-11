@@ -5,6 +5,47 @@ from utils.validators.validate_image import is_png_svg
 from django.contrib.auth.models import User
 
 
+class UserProfileAdress(models.Model):
+    class Meta:
+        verbose_name = 'Endereço'
+        verbose_name_plural = 'Endereços'
+
+    street = models.CharField(
+        max_length=255, 
+        blank=False, 
+        null=True,
+        verbose_name='Rua'
+        )
+    number = models.CharField(
+        max_length=10, 
+        blank=False, 
+        null=True,
+        verbose_name='Número'
+        )
+    neighborhood = models.CharField(
+        max_length=100, 
+        blank=False, 
+        null=True,
+        verbose_name='Bairro'
+        )
+    city = models.CharField(
+        max_length=100, 
+        blank=False, 
+        null=True,
+        verbose_name='Cidade'
+        )
+    zip_code = models.CharField(
+        max_length=10, 
+        blank=False, 
+        null=True,
+        verbose_name='CEP'
+        )
+    complement = models.CharField(max_length=100, default='')
+
+    def __str__(self):
+        return self.street + ' ' + self.number + ', ' + self.neighborhood + ', ' + self.city + ', ' + self.zip_code
+
+
 class UserProfile(models.Model):
     class Meta:
         verbose_name = 'User Profile'
@@ -31,7 +72,14 @@ class UserProfile(models.Model):
         blank=True, 
         null=True
         )
-    # address FK - will be added later
+    address = models.OneToOneField(
+        UserProfileAdress, 
+        on_delete=models.CASCADE, 
+        blank=True, 
+        null=True, 
+        related_name='address',
+        verbose_name='Endereço'
+        )
     state = models.CharField(
         max_length=2,
         choices=(
