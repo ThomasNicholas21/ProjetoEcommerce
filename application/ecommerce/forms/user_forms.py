@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from ecommerce.models.profile_models import UserProfile
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django.contrib.auth import password_validation
@@ -301,3 +302,52 @@ class UpdateUserForm(forms.ModelForm):
                 self.add_error('username', msg_error_username)
         
         return username
+    
+
+class ProfileUserForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = (
+            'profile_picture',
+            'cpf',
+            'phone',
+            'birth_date',
+            'state',
+        )
+
+    profile_picture = forms.ImageField(
+        label='Foto de perfil',
+        required=False,
+        widget=forms.FileInput(
+            attrs={
+                'accept': 'image/*',
+                'class': 'custom-file-input',
+                'style': 'display: none;'
+            }
+        ),
+
+    )
+
+    cpf = forms.CharField(
+        label='CPF',
+        required=True,
+        max_length=11,
+        min_length=11,
+    )
+
+    phone = forms.CharField(
+        label='Número de telefone',
+        required=False,
+        max_length=15,
+    )
+
+    birth_date = forms.DateField(
+        label='Data de Nascimento',
+        required=True,
+        widget=forms.DateInput(
+            attrs={
+                'type': 'date',
+            },
+            format='%Y-%m-%d'
+        )
+    )
