@@ -4,31 +4,130 @@
   enctype="multipart/form-data"
   class="form-container"
 >
-{% csrf_token %}      
+  {% csrf_token %}
 
-<div class="form-group">
-  {% for field in form %}
-    <div class="input-group">
-      <label for="{{ field.id_for_label }}" class="input-label">{{ field.label }}</label>
-      {{ field }}
-      {{ field.errors }}
+  {% if user.is_authenticated %}
+    <div class="form-group">
+      {% for field in profile_form %}
+        <div class="input-group">
+          <label for="{{ field.id_for_label }}" class="input-label">{{ field.label }}</label>
 
-      {% if field.help_text %}
-        <p class="help-text">{{ field.help_text }}</p> 
-      {% endif %}
+          {% if field.name == "profile_picture" %}
+            <div class="preview-img-wrapper">
+              {% if field.value %}
+                <img id="img-preview" src="{{ field.value.url }}" alt="Foto de perfil atual" class="preview-img" />
+              {% else %}
+                <img id="img-preview" style="display:none;" class="preview-img" />
+              {% endif %}
+            </div>
+          
+            <div class="image-controls">
+              <button type="button" id="clear-button" class="clear-button">Limpar imagem</button>
+              <label for="{{ field.id_for_label }}" class="custom-file-upload">
+                {% if field.value %}Modificar imagem{% else %}Selecionar imagem{% endif %}
+              </label>
+              {{ field }}
+            </div>
+          
+            <input type="checkbox" name="profile_picture-clear" id="profile_picture-clear_id" hidden>
+          {% else %}
+            {{ field }}
+            {{ field.errors }}
+            {% if field.help_text %}
+              <p class="help-text">{{ field.help_text }}</p> 
+            {% endif %}
+          {% endif %}
+        </div>
+      {% endfor %}
     </div>
-  {% endfor %}
-</div>
+  {% endif %}
 
-{% if form.non_field_errors %}
-  <div class="error-container">
-    <div class="error-message">
-      {{ form.non_field_errors }}
-    </div>
+
+  <div class="form-group">
+    {% for field in user_form %}
+      <div class="input-group">
+        <label for="{{ field.id_for_label }}" class="input-label">{{ field.label }}</label>
+        {{ field }}
+        {{ field.errors }}
+        {% if field.help_text %}
+          <p class="help-text">{{ field.help_text }}</p> 
+        {% endif %}
+      </div>
+    {% endfor %}
   </div>
-{% endif %}
 
-<div class="submit-container">
-  <button class="submit-button" type="submit">Enviar</button>
-</div>
+  {% if user_form.non_field_errors %}
+    <div class="error-container">
+      <div class="error-message">
+        {{ user_form.non_field_errors }}
+      </div>
+    </div>
+  {% endif %}
+
+  {% if profile_form and profile_form.non_field_errors %}
+    <div class="error-container">
+      <div class="error-message">
+        {{ profile_form.non_field_errors }}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="submit-container">
+    <button class="submit-button" type="submit">Enviar</button>
+  </div>
 </form>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const fileInput = document.getElementById("id_profile_picture");
+      const preview = document.getElementById("img-preview");
+      const clearBtn = document.getElementById("clear-button");
+      const clearCheckbox = document.getElementById("profile_picture-clear_id");
+      const uploadLabel = document.querySelector('.custom-file-upload');
+  
+      function updatePreview() {
+          if (fileInput.files && fileInput.files[0]) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  preview.src = e.target.result;
+                  preview.style.display = "block";
+                  if (clearCheckbox) clearCheckbox.checked = false;
+                  if (uploadLabel) uploadLabel.textContent = "Modificar imagem";
+              };
+              reader.readAsDataURL(fileInput.files[0]);
+          }
+      }
+  
+      if (fileInput) {
+          fileInput.addEventListener("change", updatePreview);
+      }
+  
+      if (clearBtn) {
+          clearBtn.addEventListener("click", function() {
+              if (preview) {
+                  preview.src = "";
+                  preview.style.display = "none";
+              }
+              if (clearCheckbox) {
+                  clearCheckbox.checked = true;
+              }
+              
+              if (fileInput) {
+                  fileInput.value = "";
+              }
+              
+              if (uploadLabel) {
+                  uploadLabel.textContent = "Selecionar imagem";
+              }
+          });
+      }
+  
+      // Inicializa o estado do preview se já houver uma imagem
+      if (preview && preview.src && preview.src !== "") {
+          preview.style.display = "block";
+          if (uploadLabel) {
+              uploadLabel.textContent = "Modificar imagem";
+          }
+      }
+  });
+  </script>
