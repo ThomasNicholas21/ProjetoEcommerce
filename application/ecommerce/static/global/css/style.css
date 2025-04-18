@@ -340,7 +340,121 @@ header {
   .error-message {
     font-size: 14px;
   }
+
+  .preview-img-wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+  }
   
+  /* Esconde o input file padrão */
+.hidden-file-input {
+    display: none !important;
+}
+
+/* Container da pré-visualização */
+.preview-img-wrapper {
+    margin: 15px 0;
+    text-align: center;
+}
+
+/* Estilo da imagem de pré-visualização */
+.preview-img {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Container dos controles */
+.image-controls {
+    display: flex;
+    flex-direction: column;  
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;           
+}
+
+/* Botão de limpar */
+.clear-button {
+    background-color: #ffcc00;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    width: 100%;           
+    max-width: 200px;      
+    text-align: center;
+}
+
+.clear-button:hover {
+    background-color: #cc0000;
+    transform: translateY(-1px);
+}
+
+/* Estilo personalizado do botão de upload */
+.custom-file-upload {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    width: 100%;           
+    max-width: 200px;      
+    display: block;
+    text-align: center;   
+}
+
+.custom-file-upload:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* Efeito quando o botão é clicado */
+.custom-file-upload:active {
+    transform: translateY(0);
+
+/* Garante que o input file esteja completamente oculto */
+#id_profile_picture {
+    display: none;
+}
+
+/* Estilo para o container de pré-visualização */
+.preview-img-wrapper {
+    margin: 15px 0;
+    text-align: center;
+    min-height: 150px; /* Mantém o espaço mesmo sem imagem */
+}
+
+/* Estilo para a imagem de pré-visualização */
+.preview-img {
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Começa oculto por padrão */
+}
+
+/* Container dos controles */
+.image-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+}
   /* Estilização do botão de envio */
   .submit-container {
     text-align: center;
