@@ -12,10 +12,10 @@ services:
     env_file:
       - ./dotenv_files/.env
     depends_on:
-      - mysql_ecommerce
+      - mysql_ecommerce_project
 
-  mysql_ecommerce:
-    container_name: mysql_ecommerce
+  mysql_ecommerce_project:
+    container_name: mysql_ecommerce_project
     image: mysql:8.0
     ports:
       - 3306:3306
@@ -25,4 +25,4 @@ services:
       - ./dotenv_files/.env
 
 volumes:
-  mysql_data:
+  mysql_data_ecommerce_project:
