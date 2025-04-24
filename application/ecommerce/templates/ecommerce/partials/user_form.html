@@ -79,55 +79,55 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-      const fileInput = document.getElementById("id_profile_picture");
-      const preview = document.getElementById("img-preview");
-      const clearBtn = document.getElementById("clear-button");
-      const clearCheckbox = document.getElementById("profile_picture-clear_id");
-      const uploadLabel = document.querySelector('.custom-file-upload');
-  
-      function updatePreview() {
-          if (fileInput.files && fileInput.files[0]) {
-              const reader = new FileReader();
-              reader.onload = function(e) {
-                  preview.src = e.target.result;
-                  preview.style.display = "block";
-                  if (clearCheckbox) clearCheckbox.checked = false;
-                  if (uploadLabel) uploadLabel.textContent = "Modificar imagem";
-              };
-              reader.readAsDataURL(fileInput.files[0]);
-          }
-      }
-  
-      if (fileInput) {
-          fileInput.addEventListener("change", updatePreview);
-      }
-  
-      if (clearBtn) {
-          clearBtn.addEventListener("click", function() {
-              if (preview) {
-                  preview.src = "";
-                  preview.style.display = "none";
-              }
-              if (clearCheckbox) {
-                  clearCheckbox.checked = true;
-              }
-              
-              if (fileInput) {
-                  fileInput.value = "";
-              }
-              
-              if (uploadLabel) {
-                  uploadLabel.textContent = "Selecionar imagem";
-              }
-          });
-      }
-  
-      // Inicializa o estado do preview se já houver uma imagem
-      if (preview && preview.src && preview.src !== "") {
-          preview.style.display = "block";
-          if (uploadLabel) {
-              uploadLabel.textContent = "Modificar imagem";
-          }
-      }
-  });
+    const fileInput = document.getElementById("id_profile_picture");
+    const preview = document.getElementById("img-preview");
+    const clearBtn = document.getElementById("clear-button");
+    const clearCheckbox = document.getElementById("profile_picture-clear_id");
+    const uploadLabel = document.querySelector('.custom-file-upload');
+
+    // Atualiza a pré-visualização quando um novo arquivo é selecionado
+    function updatePreview() {
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = "block";
+                if (clearCheckbox) clearCheckbox.checked = false; // Garante que o clear não está ativo
+                if (uploadLabel) uploadLabel.textContent = "Modificar imagem";
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+
+    // Configura o evento de change apenas se o input existir
+    if (fileInput) {
+        fileInput.addEventListener("change", updatePreview);
+    }
+
+    // Configura o botão de limpar (não reseta o fileInput diretamente)
+    if (clearBtn) {
+        clearBtn.addEventListener("click", function(e) {
+            e.preventDefault(); // Evita comportamento padrão (se for um botão dentro do form)
+            if (preview) {
+                preview.src = "";
+                preview.style.display = "none";
+            }
+            if (clearCheckbox) {
+                clearCheckbox.checked = true; // Marca para remover a imagem no backend
+            }
+            if (uploadLabel) {
+                uploadLabel.textContent = "Selecionar imagem";
+            }
+            // Não altera fileInput.value para evitar problemas no envio
+        });
+    }
+
+    // Inicializa o preview se já houver uma imagem
+    if (preview && preview.src && preview.src !== "") {
+        preview.style.display = "block";
+        if (uploadLabel) {
+            uploadLabel.textContent = "Modificar imagem";
+        }
+    }
+});
   </script>

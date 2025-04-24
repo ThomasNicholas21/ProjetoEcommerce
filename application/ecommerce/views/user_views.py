@@ -99,14 +99,13 @@ class UserUpdateFormView(ProfileUserFormView):
             
         profile_form = ProfileUserForm(
             self.request.POST, 
-            self.request.FILES, 
+            self.request.FILES,  # ⚠️ Certifique-se de que FILES está sendo passado!
             instance=profile
         )
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            
-            profile_form.save()
+            profile = profile_form.save()  # Salva o perfil (incluindo a imagem)
             return redirect(self.success_url)
 
         context = {
