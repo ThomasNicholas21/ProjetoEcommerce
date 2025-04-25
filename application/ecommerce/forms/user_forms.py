@@ -5,6 +5,7 @@ from ecommerce.models.profile_models import UserProfile
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
 from django.contrib.auth import password_validation
+from utils.validators.validate_image import is_png_svg
 # forms here
 
 class RegisterForm(UserCreationForm):
@@ -318,6 +319,7 @@ class ProfileUserForm(forms.ModelForm):
     profile_picture = forms.ImageField(
         label='Foto de perfil',
         required=False,
+        validators=[is_png_svg],
         widget=forms.FileInput(
             attrs={
                 'accept': 'image/*',
