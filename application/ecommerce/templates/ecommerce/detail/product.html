@@ -84,13 +84,20 @@
         const priceElement = document.querySelector(".final-price");
         const originalPriceElement = document.querySelector(".original-price");
         const discountedPriceElement = document.querySelector(".discounted-price");
-
+        const form = variationSelect.closest("form");
+    
+        form.addEventListener("submit", () => {
+            if (variationSelect && variationSelect.value) {
+                sessionStorage.setItem("lastSelectedVariation", variationSelect.value);
+            }
+        });
+    
         variationSelect.addEventListener("change", function () {
             const selectedVariation = variations.find(v => v.id == this.value);
-
+    
             if (selectedVariation) {
                 productImage.src = selectedVariation.image;
-
+    
                 if (selectedVariation.promotional_price && selectedVariation.promotional_price > 0) {
                     originalPriceElement.textContent = `R$ ${selectedVariation.price.toFixed(2)}`;
                     discountedPriceElement.textContent = `R$ ${selectedVariation.promotional_price.toFixed(2)}`;
@@ -105,6 +112,14 @@
                 }
             }
         });
+    
+        const lastSelected = sessionStorage.getItem("lastSelectedVariation");
+        if (lastSelected && variationSelect) {
+            variationSelect.value = lastSelected;
+            variationSelect.dispatchEvent(new Event("change"));
+            sessionStorage.removeItem("lastSelectedVariation"); // Limpa depois
+        }
     });
+    
 </script>
 {% endblock %}
