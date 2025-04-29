@@ -339,6 +339,12 @@ header {
   
   .error-message {
     font-size: 14px;
+    color: #ff0019 !important;
+  }
+
+  .errorlist {
+    font-size: 14px;
+    color: #ff0019 !important;
   }
 
   .preview-img-wrapper {
