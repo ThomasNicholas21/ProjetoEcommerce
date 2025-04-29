@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from ecommerce.models.profile_models import UserProfile
 from django.core.exceptions import ValidationError
 from django.utils.safestring import mark_safe
+from django.utils import timezone
 from django.contrib.auth import password_validation
 from utils.validators.validate_image import is_png_svg
 # forms here
@@ -353,3 +354,39 @@ class ProfileUserForm(forms.ModelForm):
             format='%Y-%m-%d'
         )
     )
+
+    def clean(self):
+        data = self.cleaned_data
+        image = data.get('profile_picture')
+        cpf = data.get('cpf')
+        phone = data.get('phone')
+        birth_date = data.get('birth_date')
+
+        if image:
+            is_png_svg(image)
+
+        if cpf != self.instance.cpf:
+            if UserProfile.objects.filter(cpf=cpf).exists():
+                msg_error_cpf = ValidationError(
+                    'Já existe um usuário com esse CPF.',
+                    code='Invalid'
+                )
+                self.add_error('cpf', msg_error_cpf)
+        
+        if phone != self.instance.phone:
+            if UserProfile.objects.filter(phone=phone).exists():
+                msg_error_phone = ValidationError(
+                    'Já existe um usuário com esse telefone.',
+                    code='Invalid'
+                )
+                self.add_error('phone', msg_error_phone)
+
+        if birth_date != self.instance.birth_date:
+            if birth_date > timezone.now().date():
+                msg_error_birth = ValidationError(
+                    'Data de nascimento não pode ser maior que a data atual.',
+                    code='Invalid'
+                )
+                self.add_error('birth_date', msg_error_birth)
+
+        return data
