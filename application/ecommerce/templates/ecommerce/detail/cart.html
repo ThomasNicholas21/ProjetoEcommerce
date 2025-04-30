@@ -51,9 +51,7 @@
         {% endfor %}
 
         <div class="cart-footer">
-            <form action="#" method="get">
-                <button type="submit" class="btn buy-now">Fechar Pedido</button>
-            </form>
+            <a href="{% url "ecommerce:order" %}" class="btn buy-now">Fechar Pedido</a>
         </div>
     {% else %}
         <p>Seu carrinho está vazio.</p>
