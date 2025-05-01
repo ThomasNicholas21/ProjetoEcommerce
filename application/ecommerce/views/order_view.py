@@ -17,24 +17,31 @@ class OrderView(View):
         cart_items = [v for v in cart]
         products = list(ProductVariation.objects.select_related('produto').filter(pk__in=cart_items))
 
-        for variation in products:
-            variation_id = str(variation.pk)
-            stock = variation.stock
-            cart_amount = cart[variation_id]['amount']
-            price = cart[variation_id]['price']
-            promotional_price = cart[variation_id]['promotional_price']
+        order = Order(
+            user = self.request.user,
+            total_value = sum([p.price for p in products]),  
+            total_items = sum([cart[str(p.id)].get('amount') for p in products]),
+            status = 'C'	
 
-            if stock < cart_amount:
-                messages.error(
-                    self.request,
-                    f'Produto {variation.produto.name} em falta!'
-                )
-                return redirect('ecommerce:get_products_cart')
+        )
+        order.save()
+
+        OrderItem.objects.bulk_create(
+            [
+                OrderItem(
+                    pedido = order,
+                    product_name = p.produto.name,
+                    product_id = p.produto.id,
+                    product_variation = p.name,
+                    product_variation_id = p.id,
+                    price = p.price,
+                    product_amount = cart[str(p.id)].get('amount'),
+                    imagem = p.product_image.url if p.product_image else None
+                    ) for p in products
+            ]
+        )
         
-
-        # order = OrderItem.objects.create(
-        #     ...
-        # )
+        print(OrderItem.objects.all()  )
 
 
         context = {}
