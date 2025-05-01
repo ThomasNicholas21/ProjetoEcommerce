@@ -19,6 +19,9 @@ class Order(models.Model):
         )
     )
 
+    def __str__(self):
+        return f'Pedido {self.id} - {self.user.first_name} {self.user.last_name} - {self.status}'
+
 
 class OrderItem(models.Model):
     pedido = models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -29,3 +32,6 @@ class OrderItem(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     product_amount = models.PositiveIntegerField(default=1)
     imagem = models.CharField(max_length=2560)
+
+    def __str__(self):
+        return f'Item do pedido {self.pedido.id} - {self.product_name}'
