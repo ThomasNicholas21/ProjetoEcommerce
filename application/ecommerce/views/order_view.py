@@ -4,10 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 # Create your views here.
 
-
-class OrderView(View):
-    template_name = 'ecommerce/detail/order_detail.html'
-
+class OrderCreateView(View):
     def get(self, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('ecommerce:login')
@@ -17,10 +14,27 @@ class OrderView(View):
         cart_items = [v for v in cart]
         products = list(ProductVariation.objects.select_related('produto').filter(pk__in=cart_items))
 
+        if not cart:
+            messages.error(
+                self.request,
+                'Carrinho vazio!'
+            )
+            return redirect('ecommerce:index')
+
         order = Order(
             user = self.request.user,
-            total_value = sum([p.price for p in products]),  
-            total_items = sum([cart[str(p.id)].get('amount') for p in products]),
+            total_value = sum(
+                [
+                    p.promotional_price * cart[str(p.id)].get('amount') if p.promotional_price is not None 
+                    else p.price 
+                    for p in products
+                ]
+            ),
+            total_items = sum(
+                [
+                    cart[str(p.id)].get('amount') for p in products
+                ]
+            ),
             status = 'C'	
 
         )
@@ -34,17 +48,43 @@ class OrderView(View):
                     product_id = p.produto.id,
                     product_variation = p.name,
                     product_variation_id = p.id,
-                    price = p.price,
+                    price = p.promotional_price * cart[str(p.id)].get('amount') if p.promotional_price is not None else p.price,
                     product_amount = cart[str(p.id)].get('amount'),
                     imagem = p.product_image.url if p.product_image else None
                     ) for p in products
             ]
         )
+
+        if OrderItem.objects.filter(pedido=order).exists():
+            messages.success(
+                self.request,
+                'Pedido criado com sucesso!'
+            )
+
+            return redirect('ecommerce:order_detail', order_id=order.id)
         
-        print(OrderItem.objects.all()  )
+        messages.error(
+            self.request,
+            'Erro ao realizar o pedido! Entre em contato com o suporte!'
+        )
 
+        return redirect('ecommerce:get_products_cart')
+    
 
-        context = {}
+class OrderDetailView(View):
+    template_name = 'ecommerce/detail/order_detail.html'
+
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('ecommerce:login')
+        
+        order_id = kwargs.get('order_id')
+        order = Order.objects.filter(pk=order_id).first()
+
+        context = {
+            'order': order,
+            'order_items': OrderItem.objects.filter(pedido=order_id),
+        }
 
         return render(self.request, self.template_name, context)
     
