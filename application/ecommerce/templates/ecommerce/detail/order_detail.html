@@ -1,7 +1,29 @@
 {% extends "global/base.html" %}
 
 {% block content %}
+<div class="order-detail-container">
+  <h1 class="order-title">Detalhes do Pedido #{{ order.id }}</h1>
 
-    TESTE
+  <div class="order-meta">
+    <p><strong>Usuário:</strong> {{ order.user.first_name }} {{ order.user.last_name }}</p>
+    <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+    <p><strong>Total de Itens:</strong> {{ order.total_items }}</p>
+    <p><strong>Valor Total:</strong> R$ {{ order.total_value }}</p>
+  </div>
 
+  <hr>
+
+  <h2>Itens do Pedido</h2>
+  <ul class="order-items-list">
+    {% for item in order_items  %}
+        <img src="{{ item.imagem }}" alt="{{ item.product_name }}" style="width: 100px;">
+        {{ item.product_name }}
+        <p>R${{ item.price }} <p/>
+        <p>Quantidade: {{ item.product_amount}}<p/>
+    {% endfor %}
+    </ul>
+    <div>
+        <a href=#> Pagar </a>
+    </div>
+</div>
 {% endblock content %}
