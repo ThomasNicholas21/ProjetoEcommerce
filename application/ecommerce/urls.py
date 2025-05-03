@@ -3,7 +3,7 @@ from ecommerce.views import ProductListView, AboutView, CategoriesListView, Cate
 from ecommerce.views import UserRegisterFormView, AuthenticationLoginFormView, LogoutView, UserUpdateFormView
 from ecommerce.views import AddVariationCartView, CartView, AlterProductUnitCart, DeleteProductView
 from ecommerce.views import ProfileUserFormView
-from ecommerce.views import OrderView
+from ecommerce.views import OrderCreateView, OrderDetailView
 
 
 app_name='ecommerce'
@@ -36,5 +36,7 @@ urlpatterns = [
     path('user/profile/register/', ProfileUserFormView.as_view(), name='profile_user'),
 
     # Order Views
-    path('user/orders/', OrderView.as_view(), name='order'),
+    path('user/create/order/', OrderCreateView.as_view(), name='order'),
+    path('user/order/<int:order_id>', OrderDetailView.as_view(), name='order_detail'),
+
 ]
