@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from utils.slug.slug_gen import new_slug
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -25,6 +26,11 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     pedido = models.ForeignKey(Order, on_delete=models.CASCADE)
+    slug = models.SlugField(
+        max_length=255,
+        null=True, blank=True,
+        unique=True,
+        )
     product_name = models.CharField(max_length=65)
     product_id = models.PositiveBigIntegerField()
     product_variation = models.CharField(max_length=65)
