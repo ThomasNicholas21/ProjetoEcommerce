@@ -12,6 +12,7 @@ class OrderCreateView(View):
         
         session = self.request.session
         cart = session.get('cart')
+        order_slug = session.get('order_slug')
         cart_items = [v for v in cart]
         products = list(ProductVariation.objects.select_related('produto').filter(pk__in=cart_items))
 
@@ -21,9 +22,26 @@ class OrderCreateView(View):
                 'Carrinho vazio!'
             )
             return redirect('ecommerce:index')
-
+        
+        if order_slug:
+            order = Order.objects.filter(slug=order_slug).first()
+            new_products = (
+                ProductVariation.objects
+                .filter(pk__in=cart_items)
+                .exclude(id__in=
+                            [
+                                p.product_variation_id 
+                                for p in OrderItem.objects.filter(pedido__slug=order_slug)
+                            ]
+                        )
+                    )
+            
+            print(new_products)
+            print('ola')
+            
         order = Order(
             user = self.request.user,
+            slug = new_slug(self.request.user, 5),
             total_value = sum(
                 [
                     p.promotional_price * cart[str(p.id)].get('amount') if p.promotional_price is not None 
@@ -56,6 +74,9 @@ class OrderCreateView(View):
                     ) for p in products
             ]
         )
+
+        created_order = Order.objects.order_by('-pk').first()
+        session['order_slug'] = created_order.slug
 
         if OrderItem.objects.filter(pedido=order).exists():
             messages.success(
