@@ -2,6 +2,7 @@ from ecommerce.models import Order, OrderItem, ProductVariation
 from django.views.generic import View
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from utils.slug.slug_gen import new_slug
 # Create your views here.
 
 class OrderCreateView(View):
@@ -45,6 +46,7 @@ class OrderCreateView(View):
                 OrderItem(
                     pedido = order,
                     product_name = p.produto.name,
+                    slug = new_slug(p.produto.name, 5),
                     product_id = p.produto.id,
                     product_variation = p.name,
                     product_variation_id = p.id,
