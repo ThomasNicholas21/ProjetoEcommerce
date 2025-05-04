@@ -4,6 +4,11 @@ from utils.slug.slug_gen import new_slug
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    slug = models.SlugField(
+        max_length=255,
+        null=True, blank=True,
+        unique=True,
+        )
     total_value = models.FloatField()
     total_items = models.PositiveIntegerField(default=0)
     status = models.CharField(
