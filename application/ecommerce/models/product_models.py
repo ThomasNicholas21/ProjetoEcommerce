@@ -83,8 +83,8 @@ class ProductVariation(models.Model):
         blank=True, default="products/defaults/product_default.png",
         validators=[is_png_svg,]
         )
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    promotional_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    promotional_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, default=0.00)
     stock = models.IntegerField(blank=False, default=0, help_text="Coloque quantos produtos tem em estoque.")
 
     def save(self, *args, **kwargs):
