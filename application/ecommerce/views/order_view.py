@@ -12,7 +12,7 @@ class OrderCreateView(View):
         
         session = self.request.session
         cart = session.get('cart')
-        order_slug = session.get('order_slug')
+        order = session.get('order')
         cart_items = [v for v in cart]
         products = list(ProductVariation.objects.select_related('produto').filter(pk__in=cart_items))
 
@@ -22,30 +22,15 @@ class OrderCreateView(View):
                 'Carrinho vazio!'
             )
             return redirect('ecommerce:index')
-        
-        if order_slug:
-            order = Order.objects.filter(slug=order_slug).first()
-            new_products = (
-                ProductVariation.objects
-                .filter(pk__in=cart_items)
-                .exclude(id__in=
-                            [
-                                p.product_variation_id 
-                                for p in OrderItem.objects.filter(pedido__slug=order_slug)
-                            ]
-                        )
-                    )
-            
-            print(new_products)
-            print('ola')
             
         order = Order(
             user = self.request.user,
             slug = new_slug(self.request.user, 5),
             total_value = sum(
                 [
-                    p.promotional_price * cart[str(p.id)].get('amount') if p.promotional_price is not None 
-                    else p.price 
+                    p.promotional_price * cart[str(p.id)].get('amount') 
+                    if p.promotional_price != 0
+                    else p.price * cart[str(p.id)].get('amount')
                     for p in products
                 ]
             ),
@@ -54,11 +39,11 @@ class OrderCreateView(View):
                     cart[str(p.id)].get('amount') for p in products
                 ]
             ),
-            status = 'C'	
+            status = 'O'	
 
         )
         order.save()
-
+        
         OrderItem.objects.bulk_create(
             [
                 OrderItem(
@@ -68,7 +53,11 @@ class OrderCreateView(View):
                     product_id = p.produto.id,
                     product_variation = p.name,
                     product_variation_id = p.id,
-                    price = p.promotional_price * cart[str(p.id)].get('amount') if p.promotional_price is not None else p.price,
+                    price = (
+                        p.promotional_price * cart[str(p.id)].get('amount') 
+                        if p.promotional_price != 0   
+                        else p.price * cart[str(p.id)].get('amount')
+                        ),
                     product_amount = cart[str(p.id)].get('amount'),
                     imagem = p.product_image.url if p.product_image else None
                     ) for p in products
@@ -76,7 +65,10 @@ class OrderCreateView(View):
         )
 
         created_order = Order.objects.order_by('-pk').first()
-        session['order_slug'] = created_order.slug
+        session['order'] = {
+                                'slug': created_order.slug,
+                                'id': created_order.id
+                            }
 
         if OrderItem.objects.filter(pedido=order).exists():
             messages.success(
@@ -94,6 +86,65 @@ class OrderCreateView(View):
         return redirect('ecommerce:get_products_cart')
     
 
+class OrderAlterView(View):
+    def get(self, *args, **kwargs):
+        session = self.request.session
+        cart = session.get('cart')
+        order = session.get('order')
+        cart_items = [v for v in cart]
+
+        if order:
+            order_slug = order.get('slug')
+            order = Order.objects.filter(slug=order_slug).first()
+            new_products = (
+                list(ProductVariation.objects
+                .filter(pk__in=cart_items)
+                .exclude(id__in=
+                            [
+                                p.product_variation_id 
+                                for p in OrderItem.objects.filter(pedido__slug=order_slug)
+                            ]
+                        ))
+                    )
+            
+            update_products = list(OrderItem.objects.filter(pedido=order))
+
+            for item in update_products:
+                amount = cart[str(item.product_variation_id)]['amount']
+                
+                old_amount = item.product_amount or 1  
+                unit_price = item.price / old_amount
+
+                item.product_amount = amount
+                item.price = unit_price * amount
+            
+            OrderItem.objects.bulk_update(
+                update_products,
+                ['product_amount', 'price']
+            )
+            
+            OrderItem.objects.bulk_create(
+                [
+                    OrderItem(
+                        pedido = order,
+                        product_name = p.produto.name,
+                        slug = new_slug(p.produto.name, 5),
+                        product_id = p.produto.id,
+                        product_variation = p.name,
+                        product_variation_id = p.id,
+                        price = (
+                            p.promotional_price * cart[str(p.id)].get('amount') 
+                            if p.promotional_price != 0   
+                            else p.price * cart[str(p.id)].get('amount')
+                            ),
+                        product_amount = cart[str(p.id)].get('amount'),
+                        imagem = p.product_image.url if p.product_image else None
+                    ) for p in new_products
+                ]
+            )
+
+        return redirect('ecommerce:order_detail', order_id=order.id)
+
 class OrderDetailView(View):
     template_name = 'ecommerce/detail/order_detail.html'
 
@@ -110,4 +161,3 @@ class OrderDetailView(View):
         }
 
         return render(self.request, self.template_name, context)
-    
