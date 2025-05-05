@@ -1,29 +1,40 @@
 {% extends "global/base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="order-detail-container">
-  <h1 class="order-title">Detalhes do Pedido #{{ order.id }}</h1>
+    <h2 class="order-title">Detalhes do Pedido</h2>
 
-  <div class="order-meta">
-    <p><strong>Usuário:</strong> {{ order.user.first_name }} {{ order.user.last_name }}</p>
-    <p><strong>Status:</strong> {{ order.get_status_display }}</p>
-    <p><strong>Total de Itens:</strong> {{ order.total_items }}</p>
-    <p><strong>Valor Total:</strong> R$ {{ order.total_value }}</p>
-  </div>
+    <div class="order-meta">
+        <p><strong>Usuário:</strong> {{ order.user.first_name }} {{ order.user.last_name }}</p>
+        <p><strong>Status:</strong> {{ order.get_status_display }}</p>
+        <p><strong>Total de Itens:</strong> {{ order.total_items }}</p>
+        <p><strong>Valor Total:</strong> R$ {{ order.total_value }}</p>
+    </div>
 
-  <hr>
+    <h3>Itens do Pedido</h3>
 
-  <h2>Itens do Pedido</h2>
-  <ul class="order-items-list">
-    {% for item in order_items  %}
-        <img src="{{ item.imagem }}" alt="{{ item.product_name }}" style="width: 100px;">
-        {{ item.product_name }}
-        <p>R${{ item.price }} <p/>
-        <p>Quantidade: {{ item.product_amount}}<p/>
-    {% endfor %}
-    </ul>
-    <div>
-        <a href=#> Pagar </a>
+    <div class="order-items">
+        {% for item in order_items %}
+            <div class="order-item">
+                <div class="order-item-image">
+                    <img src="{{ item.imagem }}" alt="{{ item.product_name }}">
+                </div>
+                <div class="order-item-details">
+                    <h4 class="product-name">{{ item.product_name }}</h4>
+                    {% if item.product_variation %}
+                        <p class="variation">Variação: {{ item.product_variation }}</p>
+                    {% endif %}
+                    <p class="price">Preço: R$ {{ item.price }}</p>
+                    <p class="quantity">Quantidade: {{ item.product_amount }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="order-footer">
+        <a href="#" class="btn action">Pagar</a>
+        <a href="#" class="btn secondary">Salvar Pedido</a>
     </div>
 </div>
 {% endblock content %}
