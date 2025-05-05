@@ -16,6 +16,7 @@ class Order(models.Model):
         default='C',
         choices=(
             ("A", "Aprovado"),
+            ("O", "Aberto"),
             ("C", "Criado"),
             ("R", "Reprovado"),
             ("P", "Pendente"),
