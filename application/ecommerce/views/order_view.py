@@ -92,6 +92,7 @@ class OrderAlterView(View):
         cart = session.get('cart')
         order = session.get('order')
         cart_items = [v for v in cart]
+        products = list(ProductVariation.objects.select_related('produto').filter(pk__in=cart_items))
 
         if order:
             order_slug = order.get('slug')
@@ -142,6 +143,20 @@ class OrderAlterView(View):
                     ) for p in new_products
                 ]
             )
+
+        total_value = sum(
+            [(
+                float(p.promotional_price) if p.promotional_price and p.promotional_price != 0
+                else float(p.price)
+            ) * int(cart[str(p.id)].get('amount'))
+            for p in products]
+        )
+
+        total_items = sum(cart[str(p.id)].get('amount') for p in products)
+
+        order.total_value = total_value
+        order.total_items = total_items
+        order.save()
 
         return redirect('ecommerce:order_detail', order_id=order.id)
 
