@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from utils.slug.slug_gen import new_slug
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
