@@ -8,7 +8,7 @@ class Order(models.Model):
         null=True, blank=True,
         unique=True,
         )
-    total_value = models.FloatField()
+    total_value = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_items = models.PositiveIntegerField(default=0)
     status = models.CharField(
         max_length=1,
@@ -40,7 +40,7 @@ class OrderItem(models.Model):
     product_id = models.PositiveBigIntegerField()
     product_variation = models.CharField(max_length=65)
     product_variation_id = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     product_amount = models.PositiveIntegerField(default=1)
     imagem = models.CharField(max_length=2560)
 
