@@ -821,34 +821,27 @@ header {
 }
 
 .btn.action {
-    background-color: #4CAF50;
-    color: white;
-    padding: 0.7rem 1.2rem;
-    border: none;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    border: 3px solid #ffcc00;
+    color: #333;
+    background-color: white;
 }
 
 .btn.action:hover {
-    background-color: #45a049;
+    background-color: #ffcc00;
+    color: #333;
+    transform: scale(1.05);
 }
 
 .btn.secondary {
-    background-color: #2196F3;
-    color: white;
-    padding: 0.7rem 1.2rem;
-    border: none;
-    border-radius: 6px;
-    text-decoration: none;
-    margin-left: 1rem;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
+    border: 3px solid #ffcc00;
+    color: #333;
+    background-color: white;
 }
 
 .btn.secondary:hover {
-    background-color: #1976D2;
+    background-color: #ffcc00;
+    color: #333;
+    transform: scale(1.05);
 }
 
 /* NOVOS ESTILOS PARA A LIXEIRA */
