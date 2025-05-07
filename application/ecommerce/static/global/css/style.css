@@ -582,6 +582,7 @@ header {
 
 .card-actions {
     margin-top: 10px;
+    justify-content: center;
 }
 
 .card-action-link {
