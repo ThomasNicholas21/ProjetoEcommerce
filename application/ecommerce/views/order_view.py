@@ -94,6 +94,11 @@ class OrderAlterView(View):
         cart_items = [v for v in cart]
         products = list(ProductVariation.objects.select_related('produto').filter(pk__in=cart_items))
 
+        order_items = list(OrderItem.objects.filter(pedido=order['id']))
+        for items in order_items:
+            if not str(items.product_variation_id) in cart_items:
+                OrderItem.objects.filter(product_variation_id=items.product_variation_id).delete()
+
         if order:
             order_slug = order.get('slug')
             order = Order.objects.filter(slug=order_slug).first()
@@ -146,13 +151,15 @@ class OrderAlterView(View):
 
         total_value = sum(
             [(
-                float(p.promotional_price) if p.promotional_price and p.promotional_price != 0
-                else float(p.price)
-            ) * int(cart[str(p.id)].get('amount'))
+                p.promotional_price if p.promotional_price and p.promotional_price != 0
+                else p.price
+            ) * cart[str(p.id)].get('amount')
             for p in products]
         )
 
         total_items = sum(cart[str(p.id)].get('amount') for p in products)
+
+        print(type(total_value))
 
         order.total_value = total_value
         order.total_items = total_items
