@@ -167,6 +167,18 @@ class OrderAlterView(View):
 
         return redirect('ecommerce:order_detail', order_id=order.id)
 
+
+
+class OrderSave(View):
+    def get(self, *args, **kwargs):
+        ...
+    
+
+class OrderListView(View):
+    def get(self, *args, **kwargs):
+        ...
+
+
 class OrderDetailView(View):
     template_name = 'ecommerce/detail/order_detail.html'
 
