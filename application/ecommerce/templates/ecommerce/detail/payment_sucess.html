@@ -1,0 +1,38 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+<div class="confirmation-container">
+    <div class="confirmation-loader" id="loader">
+        <div class="loader-circle"></div>
+        <p>Processando seu pedido...</p>
+    </div>
+    
+    <div class="confirmation-success" id="success" style="display: none;">
+        <div class="success-icon">
+            <svg viewBox="0 0 24 24">
+                <path fill="currentColor" d="M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41 10.59L10 14.17L17.59 6.58L19 8L10 17Z" />
+            </svg>
+        </div>
+        <h2>Pedido Aprovado!</h2>
+        <p>Seu pedido foi confirmado com sucesso.</p>
+        <a href="{% url 'ecommerce:index' %}" class="back-button">Voltar à página inicial</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mostra o loader e esconde o sucesso inicialmente
+        const loader = document.getElementById('loader');
+        const success = document.getElementById('success');
+        
+        // Simula processamento por 5 segundos
+        setTimeout(function() {
+            loader.style.display = 'none';
+            success.style.display = 'block';
+            
+            // Opcional: Rolando para o topo da mensagem de sucesso
+            success.scrollIntoView({ behavior: 'smooth' });
+        }, 5000);
+    });
+</script>
+{% endblock %}
