@@ -52,7 +52,7 @@
 
         <div class="cart-footer">
             {% if request.session.order %}
-                <a href="{% url "ecommerce:order_alter" %}" class="btn buy-now">Alterar Pedido</a>
+                <a href="{% url "ecommerce:order_alter" %}" class="btn buy-now change">Alterar Pedido</a>
                 <a href="{% url "ecommerce:order_detail" request.session.order.id %}" class="btn buy-now">Detalhes do Pedido</a>
             {% else %}
                 <a href="{% url "ecommerce:order" %}" class="btn buy-now">Fechar Pedido</a>
