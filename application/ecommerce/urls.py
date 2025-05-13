@@ -39,5 +39,5 @@ urlpatterns = [
     path('user/order/<int:order_id>', OrderDetailView.as_view(), name='order_detail'),
     path('user/alter/order/', OrderAlterView.as_view(), name='order_alter'),
     path('user/alter/save/', OrderSave.as_view(), name='order_save'),
-    path('user/orders/', OrderSave.as_view(), name='order_save'),
+    # path('user/orders/', OrderSave.as_view(), name='order_payment'),
 ]

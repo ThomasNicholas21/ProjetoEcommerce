@@ -171,7 +171,18 @@ class OrderAlterView(View):
 
 class OrderSave(View):
     def get(self, *args, **kwargs):
-        ...
+        django_session = self.request.session
+        order_id = django_session['order'].get('id')
+        order = Order.objects.filter(pk=order_id).first()
+        order.status = 'C'
+        order.save()
+        messages.success(
+            self.request,
+            'Pedido salvo com sucesso! Para acessar clique no seu perfil e depois em pedidos para visualiza-lo!'
+        )
+        del django_session['order']
+
+        return redirect('ecommerce:order_payment')
     
 
 class OrderListView(View):
