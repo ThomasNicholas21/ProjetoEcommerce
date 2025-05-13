@@ -180,9 +180,40 @@ class OrderSave(View):
             self.request,
             'Pedido salvo com sucesso! Para acessar clique no seu perfil e depois em pedidos para visualiza-lo!'
         )
-        del django_session['order']
+        
 
         return redirect('ecommerce:order_payment')
+    
+
+class OrderPaymentView(View):
+    def get(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('ecommerce:login')
+        
+        order_id = self.request.session['order'].get('id')
+        order = Order.objects.filter(pk=order_id).first()
+
+        context = {
+            'order': order,
+            'order_items': OrderItem.objects.filter(pedido=order_id),
+        }
+
+        return render(self.request, 'ecommerce/page/payment.html', context)    
+
+
+class OrderPaymentSucessView(View):
+    def get(self, *args, **kwargs):
+        django_session = self.request.session
+        order_id = django_session['order'].get('id')
+        order = Order.objects.filter(pk=order_id).first()
+        order.status = 'A'
+        order.save()
+
+        del django_session['cart']
+        del django_session['order']
+        
+
+        return render(self.request, 'ecommerce/detail/payment_sucess.html')   
     
 
 class OrderListView(View):

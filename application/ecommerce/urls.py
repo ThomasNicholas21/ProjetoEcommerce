@@ -3,7 +3,7 @@ from ecommerce.views import ProductListView, AboutView, CategoriesListView, Cate
 from ecommerce.views import UserRegisterFormView, AuthenticationLoginFormView, LogoutView, UserUpdateFormView
 from ecommerce.views import AddVariationCartView, CartView, AlterProductUnitCart, DeleteProductView
 from ecommerce.views import ProfileUserFormView
-from ecommerce.views import OrderCreateView, OrderDetailView, OrderAlterView, OrderSave
+from ecommerce.views import OrderCreateView, OrderDetailView, OrderAlterView, OrderSave, OrderPaymentView, OrderPaymentSucessView
 
 
 app_name='ecommerce'
@@ -39,5 +39,8 @@ urlpatterns = [
     path('user/order/<int:order_id>', OrderDetailView.as_view(), name='order_detail'),
     path('user/alter/order/', OrderAlterView.as_view(), name='order_alter'),
     path('user/alter/save/', OrderSave.as_view(), name='order_save'),
-    # path('user/orders/', OrderSave.as_view(), name='order_payment'),
+
+    # Payment Views - No gateway were integrated, only a payment simulation
+    path('user/payment/', OrderPaymentView.as_view(), name='order_payment'),
+    path('user/payment/sucess/', OrderPaymentSucessView.as_view(), name='payment_sucess'),
 ]
