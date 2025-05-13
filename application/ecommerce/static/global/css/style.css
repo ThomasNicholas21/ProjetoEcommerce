@@ -1341,6 +1341,248 @@ label {
     color: #333;
 }
 
+/*payment styles*/
+
+/* static/ecommerce/css/payment.css */
+
+body {
+    background-color: whitesmoke;
+    font-family: 'Poppins', sans-serif;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.payment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* sempre duas colunas */
+    gap: 1.5rem;
+    justify-content: center; /* centraliza o grid dentro do container */
+    align-items: start;
+}
+
+h2.chose {
+    grid-column: 1 / -1; /* título ocupa as duas colunas */
+    text-align: center;
+    font-weight: 700;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+
+
+.card {
+    background-color: white;
+    border-radius: 12px;
+    width: 300px;
+    height: 290px;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: #222;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: #444;
+    margin-bottom: 0.4rem;
+}
+
+.btn.payment {
+    color: black;
+    background-color: #ffcc00;
+    text-align: center !important;
+    margin-top: 1rem;
+    width: 100%;
+    font-weight: bold;
+    padding: 0.6rem;
+    border-radius: 8px;
+    font-size: 1rem;
+
+    p{
+        width: 100%;
+    }
+}
+
+.btn.payment:hover {
+    background-color: #e6b800;
+    transform: scale(1.05);
+}
+
+
+.btn.payment {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #000;
+  background: #ffcc00;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.btn.payment::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: green;
+  z-index: 1;
+  transition: width 0.5s;
+}
+
+.btn.payment:hover::before {
+  width: 100%;
+}
+
+.btn.payment span {
+  position: relative;
+  z-index: 2;
+  transition: color 0.5s;
+}
+
+.btn.payment:hover span {
+  color: white;
+}
+
+.badge.bg-danger {
+    background-color: #ffcc00;
+    color: black;
+    font-size: 0.75rem;
+    margin-left: 8px;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.border-danger {
+    border: 2px solid #ffcc00 !important;
+}
+
+.text-danger {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.text-decoration-line-through {
+    text-decoration: line-through;
+}
+
+@media (max-width: 768px) {
+    .payment-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+}
+
+
+.confirmation-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.loader-circle {
+    width: 60px;
+    height: 60px;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.confirmation-success {
+    padding: 2rem;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.success-icon svg {
+    width: 50px;
+    height: 50px;
+    color: white;
+}
+
+.confirmation-success h2 {
+    color: #4CAF50;
+    margin-bottom: 1rem;
+}
+
+.confirmation-success p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #45a049;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
     header {
