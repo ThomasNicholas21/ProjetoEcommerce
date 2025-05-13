@@ -1,0 +1,70 @@
+{% extends "global/base.html" %}
+{% load custom_filters %}
+
+{% block content %}
+<div class="container">
+    <div class="payment-grid">
+
+        <h2 class="chose">Escolha a forma de pagamento</h2>
+
+        {% with order.total_value as total %}
+        {% with total|floatformat:2 as total_float %}
+
+        <!-- Pix com desconto -->
+        <div class="card border-danger">
+            <div class="card-body">
+                <h5 class="card-title">Pix <span class="badge bg-danger">-10%</span></h5>
+                <p class="card-text">Pagamento instantâneo e com desconto.</p>
+                <p class="card-text text-decoration-line-through text-danger">De: R$ {{ total_float }}</p>
+                <p class="card-text"><strong>Por: R$ {{ total|mul:0.9|floatformat:2 }}</strong></p>
+                <a href="{% url "ecommerce:payment_sucess" %}"><button class="btn payment"><span>Pagar</span></button></a>
+            </div>
+        </div>
+
+        <!-- Boleto com desconto -->
+        <div class="card border-danger">
+            <div class="card-body">
+                <h5 class="card-title">Boleto Bancário <span class="badge bg-danger">-10%</span></h5>
+                <p class="card-text">Realize o pagamento em até 3 dias úteis.</p>
+                <p class="card-text text-decoration-line-through text-danger">De: R$ {{ total_float }}</p>
+                <p class="card-text"><strong>Por: R$ {{ total|mul:0.9|floatformat:2 }}</strong></p>
+                <a href="{% url "ecommerce:payment_sucess" %}"><button class="btn payment"><span>Pagar</span></button></a>
+            </div>
+        </div>
+
+        <!-- Cartão de Crédito -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cartão de Crédito</h5>
+                <p class="card-text">Pagamento em até 12x sem juros no crédito.</p>
+                <p class="card-text"><strong>Total:</strong> R$ {{ total_float }}</p>
+                <a href="{% url "ecommerce:payment_sucess" %}"><button class="btn payment"><span>Pagar</span></button></a>
+            </div>
+        </div>
+
+        <!-- Cartão de Débito -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cartão de Débito</h5>
+                <p class="card-text">Pagamento instantâneo com débito.</p>
+                <p class="card-text"><strong>Total:</strong> R$ {{ total_float }}</p>
+                <a href="{% url "ecommerce:payment_sucess" %}"><button class="btn payment"><span>Pagar</span></button></a>
+            </div>
+        </div>
+
+        <!-- Transferência Bancária -->
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Transferência Bancária</h5>
+                <p class="card-text">Envie o comprovante após o pagamento.</p>
+                <p class="card-text"><strong>Total:</strong> R$ {{ total_float }}</p>
+                <a href="{% url "ecommerce:payment_sucess" %}"><button class="btn payment"><span>Pagar</span></button></a>
+            </div>
+        </div>
+
+        {% endwith %}
+        {% endwith %}
+
+    </div>
+</div>
+{% endblock %}
