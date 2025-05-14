@@ -383,6 +383,7 @@ header {
     gap: 10px;
     margin-top: 10px;
     width: 100%;           
+    align-items: center;
 }
 
 /* Botão de limpar */
@@ -681,6 +682,7 @@ header {
     cursor: pointer;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    margin-bottom: 15px;
 }
 
 .cart-item-image img {
