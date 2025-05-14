@@ -61,7 +61,7 @@
     {% else %}
     <div class="header-icons">
         <div class="cart-icon">
-            <a href="#" class="font-shopping-cart"><i class="fas fa-shopping-cart"></i> QntProds </a>
+            <a href="#" class="font-shopping-cart"><i class="fas fa-shopping-cart"></i> {{ cart_amount }}x </a>
         </div>
 
         <a href="{% url "ecommerce:login" %}" class="login-btn">Entrar</a>
