@@ -1,5 +1,5 @@
 from ecommerce.models import Order, OrderItem, ProductVariation
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from utils.slug.slug_gen import new_slug
@@ -216,9 +216,16 @@ class OrderPaymentSucessView(View):
         return render(self.request, 'ecommerce/detail/payment_sucess.html')   
     
 
-class OrderListView(View):
-    def get(self, *args, **kwargs):
-        ...
+class OrderListView(ListView):
+    template_name = 'ecommerce/page/user_orders.html'
+    model = Order
+    context_object_name = 'orders'
+    paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user=self.request.user).exclude(status='O').order_by('pk')
+        return queryset
 
 
 class OrderDetailView(View):
