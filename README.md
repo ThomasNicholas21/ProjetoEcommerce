@@ -32,6 +32,7 @@ cd seu-repositorio
 Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis de ambiente:
 
 ```env
+DB_ENGINE="django.db.backends.mysql"
 MYSQL_DATABASE=seu_banco
 MYSQL_USER=seu_usuario
 MYSQL_PASSWORD=sua_senha
