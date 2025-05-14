@@ -29,8 +29,8 @@ class CategoryAdmin(admin.ModelAdmin):
     ordering = '-id',
 
 
-@admin.register(ProductVariation)
-class ProductVariationAdmin(admin.ModelAdmin):
-    list_display = 'id', 'name', 'price', 'stock',
-    list_display_links = 'name',
-    search_fields = 'name', 'product__name',
+# @admin.register(ProductVariation)
+# class ProductVariationAdmin(admin.ModelAdmin):
+#     list_display = 'id', 'name', 'price', 'stock',
+#     list_display_links = 'name',
+#     search_fields = 'name', 'product__name',

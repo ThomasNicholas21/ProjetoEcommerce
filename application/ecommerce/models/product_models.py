@@ -73,8 +73,8 @@ class Product(models.Model):
 
 class ProductVariation(models.Model):
     class Meta:
-        verbose_name = 'Variation'
-        verbose_name_plural = 'Variations'
+        verbose_name = 'Product variation'
+        verbose_name_plural = 'Product variations'
 
     produto = models.ForeignKey(Product, on_delete=models.CASCADE)
     name = models.CharField(max_length=65)
