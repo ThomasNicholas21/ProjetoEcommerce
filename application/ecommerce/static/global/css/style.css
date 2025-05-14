@@ -229,7 +229,7 @@ header {
     border-radius: 5px;
     transition: background-color 0.3s;
     display: block;
-    width: 100px; /* Definindo largura fixa */
+    width: 150px; /* Definindo largura fixa */
     text-align: center;
 }
 
@@ -253,6 +253,7 @@ header {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     z-index: 1;
+    width: 150px; /* Definindo largura fixa */
 }
 
 .profile-dropdown a {
@@ -540,6 +541,9 @@ header {
 .card-title {
     font-size: 1.2em;
     margin: 10px 0;
+    white-space: nowrap;       /* Mantém o texto em uma única linha */
+    overflow: hidden;          /* Oculta o conteúdo excedente */
+    text-overflow: ellipsis;   /* Adiciona "..." ao final */
 }
 
 .card-title-link {
@@ -1350,7 +1354,7 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-.container {
+.container.payment {
     max-width: 900px;
     margin: 0 auto;
     padding: 2rem 1rem;
@@ -1403,6 +1407,7 @@ h2.chose {
     font-size: 1.3rem;
     margin-bottom: 0.8rem;
     color: #222;
+    text-overflow: ellipsis ; 
 }
 
 .card-text {
@@ -1583,6 +1588,98 @@ h2.chose {
     background-color: #45a049;
 }
 
+/* Orders */
+/* Orders */
+.orders-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.orders-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.order-card {
+    position: relative;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.order-card:hover {
+    transform: scale(1.01);
+}
+
+.order-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 1rem;
+}
+
+.order-summary {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.order-total,
+.order-status {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    color: #444;
+}
+
+
+.order-status .badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+}
+
+.continue-payment-btn {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    padding: 10px 15px;
+    border: 3px solid #ffcc00;
+    background-color: #ffcc00;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    gap: 8px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+}
+
+.continue-payment-btn:hover {
+    border: 3px solid #ffcc00;
+    color: #333;
+    background-color: white;
+    transform: scale(1.05);
+}
+
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 /* Responsivo */
 @media (max-width: 768px) {
     header {
