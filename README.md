@@ -19,7 +19,7 @@ Este é um projeto de e-commerce desenvolvido com **Python** e **Django**, utili
 
 ## 📹 Demonstração
 
-<a href="https://www.youtube.com/watch?v=SEU_ID" target="_blank">▶️ Assista no YouTube</a>
+<a href="https://youtu.be/CKzkPdsArB4" target="_blank">▶️ Assista no YouTube</a>
 
 ---
 
