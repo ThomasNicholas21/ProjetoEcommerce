@@ -91,7 +91,7 @@ docker-compose exec web python manage.py createsuperuser
 
 ## 👨‍💻 Autor
 
-Desenvolvido por **Thomas Nicholas** — [@seuLinkedin](https://www.linkedin.com/in/thomaas-nicholas/) | [GitHub](https://github.com/ThomasNicholas21)
+Desenvolvido por **Thomas Nicholas** — [Linkedin](https://www.linkedin.com/in/thomaas-nicholas/) | [GitHub](https://github.com/ThomasNicholas21)
 
 ---
 
