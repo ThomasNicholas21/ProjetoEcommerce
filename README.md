@@ -85,7 +85,7 @@ docker-compose exec web python manage.py createsuperuser
 
 ## 📹 Demonstração
 
-[▶️ Assista no YouTube]https://youtu.be/CKzkPdsArB4)
+[▶️ Assista no YouTube](https://youtu.be/CKzkPdsArB4)
 
 ---
 
