@@ -53,18 +53,28 @@ ALLOWED_HOSTS="127.0.0.1, 0.0.0.0, localhost"
 docker-compose up --build
 ```
 
+#### *Obs:* Ao executar o container, através de scripts, irá rodar `collectstatic`, `makemigrations`, `migrate` e `runserver`
 ---
 
-### 4. Aplicar Migrações e Criar Superusuário
+### 4. Criar Superusuário
 
 ```bash
-docker-compose exec web python manage.py migrate
-docker-compose exec web python manage.py createsuperuser
+docker-compose run --rm application python manage.py createsuperuser
 ```
 
 ---
 
-### 5. Acessar a Aplicação
+### 5. Scripts disponíveis
+
+```bash
+docker-compose run --rm application collectstatic.sh
+docker-compose run --rm application makemigrations.sh
+docker-compose run --rm application migrate.sh
+```
+
+---
+
+### 6. Acessar a Aplicação
 
 - 🛍️ **Frontend**: [http://localhost:8000](http://localhost:8000)
 - 🔐 **Admin**: [http://localhost:8000/admin](http://localhost:8000/admin)
