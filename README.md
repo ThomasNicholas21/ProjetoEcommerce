@@ -7,7 +7,7 @@ Este é um projeto de e-commerce desenvolvido com **Python** e **Django**, utili
 ## 🚀 Tecnologias Utilizadas
 
 - Python 3.11+
-- Django 5.x
+- Django 4.2.x
 - MySQL 8.x
 - Docker & Docker Compose
 - HTML/CSS com Django Templates
