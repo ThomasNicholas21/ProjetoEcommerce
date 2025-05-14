@@ -19,7 +19,8 @@ Este é um projeto de e-commerce desenvolvido com **Python** e **Django**, utili
 
 ## 📹 Demonstração
 
-[▶️ Assista no YouTube](https://youtu.be/CKzkPdsArB4"target="_blank)
+[▶️ Assista no YouTube](https://youtu.be/CKzkPdsArB4"target="_blank) — (Ctrl + clique para abrir em nova aba)
+
 ---
 
 ## 🚀 Tecnologias Utilizadas
