@@ -1,0 +1,53 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+<div class="orders-container">
+    <h2 class="orders-title">Seus Pedidos</h2>
+
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-card">
+                <h5 class="order-title">Pedido #{{ forloop.counter }}</h5>
+
+                <p class="order-summary">
+                    <strong>Resumo da compra:</strong>
+                    {% with order.orderitem_set.all as items %}
+                        {% for item in items %}
+                            {{ item.product_variation }}{% if not forloop.first %}, {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                </p>
+
+                <p class="order-total"><strong>Total:</strong> R$ {{ order.total_value|floatformat:2 }}</p>
+
+                <p class="order-status">
+                    <strong>Status:</strong>
+                    {% if order.status == "A" %}
+                        <span class="badge bg-primary">Aprovado</span>
+                    {% elif order.status == "C" %}
+                        <span class="badge bg-secondary">Criado</span>
+                    {% elif order.status == "R" %}
+                        <span class="badge bg-danger">Reprovado</span>
+                    {% elif order.status == "P" %}
+                        <span class="badge bg-warning text-dark">Pendente</span>
+                    {% elif order.status == "E" %}
+                        <span class="badge bg-info text-dark">Enviado</span>
+                    {% elif order.status == "F" %}
+                        <span class="badge bg-dark">Finalizado</span>
+                    {% elif order.status == "X" %}
+                        <span class="badge bg-danger">Cancelado</span>
+                    {% endif %}
+                </p>
+
+                {% if order.status == "C" %}
+                    <a href="{% url 'ecommerce:order_payment'  %}" class="continue-payment-btn">
+                        Continuar Pagamento
+                    </a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-center text-muted">Você ainda não realizou nenhuma compra.</p>
+    {% endif %}
+</div>
+{% endblock %}
