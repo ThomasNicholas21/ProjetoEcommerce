@@ -4,18 +4,6 @@ Este é um projeto de e-commerce desenvolvido com **Python** e **Django**, utili
 
 ---
 
-## 🚀 Tecnologias Utilizadas
-
-- Python 3.11+
-- Django 4.2.x
-- MySQL 8.x
-- Docker & Docker Compose
-- HTML/CSS com Django Templates
-- Django Signals
-- Context Processors & Template Tags
-
----
-
 ## 📦 Funcionalidades
 
 - Carrinho de compras com sessões
@@ -32,6 +20,18 @@ Este é um projeto de e-commerce desenvolvido com **Python** e **Django**, utili
 ## 📹 Demonstração
 
 [▶️ Assista no YouTube](https://youtu.be/CKzkPdsArB4)
+
+---
+
+## 🚀 Tecnologias Utilizadas
+
+- Python 3.11+
+- Django 4.2.x
+- MySQL 8.x
+- Docker & Docker Compose
+- HTML/CSS com Django Templates
+- Django Signals
+- Context Processors & Template Tags
 
 ---
 
