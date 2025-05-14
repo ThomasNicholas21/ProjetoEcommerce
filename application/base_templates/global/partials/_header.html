@@ -46,10 +46,10 @@
       
         {% if user.is_authenticated %}
         <div class="profile-menu">
-            <a href="#" class="profile-btn">Perfil</a>
+            <a href="#" class="profile-btn">Minha conta</a>
             <div class="profile-dropdown">
-                <a href="{% url "ecommerce:update_user" %}">Editar perfil</a>
-                <a href="#">Pedidos</a>
+                <a href="{% url "ecommerce:update_user" %}">Perfil</a>
+                <a href="{% url "ecommerce:user_orders" %}">Pedidos</a>
                 <a href="{% url "ecommerce:logout" %}">Logout</a>
             </div>
         </div>        
