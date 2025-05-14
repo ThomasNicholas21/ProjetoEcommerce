@@ -83,9 +83,9 @@ docker-compose exec web python manage.py createsuperuser
 
 ---
 
-## 📹 Demonstração (Em Breve)
+## 📹 Demonstração
 
-> Aqui será inserido um vídeo mostrando o funcionamento da aplicação, desde a navegação até a finalização de pedidos.
+[▶️ Assista no YouTube]https://youtu.be/CKzkPdsArB4)
 
 ---
 
