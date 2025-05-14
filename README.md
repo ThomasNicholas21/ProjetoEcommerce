@@ -16,6 +16,25 @@ Este é um projeto de e-commerce desenvolvido com **Python** e **Django**, utili
 
 ---
 
+## 📦 Funcionalidades
+
+- Carrinho de compras com sessões
+- Atualização automática de estoque via Django Signals
+- Painel administrativo customizável
+- Sistema de pedidos com status e controle
+- Template base com componentes reutilizáveis (partials)
+- Context processors para informações globais
+- Filtros personalizados com Template Tags
+- Estrutura pronta para integração futura com gateway de pagamento
+
+---
+
+## 📹 Demonstração
+
+[▶️ Assista no YouTube](https://youtu.be/CKzkPdsArB4)
+
+---
+
 ## ⚙️ Como Executar o Projeto
 
 ### 1. Clonar o Repositório
@@ -81,24 +100,7 @@ docker-compose run --rm application migrate.sh
 
 ---
 
-## 📦 Funcionalidades
 
-- Carrinho de compras com sessões
-- Atualização automática de estoque via Django Signals
-- Painel administrativo customizável
-- Sistema de pedidos com status e controle
-- Template base com componentes reutilizáveis (partials)
-- Context processors para informações globais
-- Filtros personalizados com Template Tags
-- Estrutura pronta para integração futura com gateway de pagamento
-
----
-
-## 📹 Demonstração
-
-[▶️ Assista no YouTube](https://youtu.be/CKzkPdsArB4)
-
----
 
 ## 👨‍💻 Autor
 
@@ -109,6 +111,5 @@ Desenvolvido por **Thomas Nicholas** — [Linkedin](https://www.linkedin.com/in/
 ## 🐳 Observações
 
 - Este projeto é focado em fins educacionais e MVP.
-- Futuras implementações incluirão: pagamento online, histórico de compras e avaliações de produtos.
 
 ---
